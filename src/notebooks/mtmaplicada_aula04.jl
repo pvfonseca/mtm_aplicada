@@ -41,7 +41,8 @@ md"""
 	O texto que segue não tem a menor pretensão de originalidade. Ele serve apenas como registro dos principais princípios, conceitos e técnicas analíticas que são trabalhados em sala de aula.
 
 	Leitura obrigatória:
-	* STEWART, J.; CLEGG, D.; WATSON, S. Cálculo: volume I. 9.ed. São Paulo: Cengage Learning, 2022. (seções 2.5 e 2.6)
+	
+	▶️ Stewart, Clegg, Watson (2022). [Cálculo: volume I](https://app.minhabiblioteca.com.br/reader/books/9786555584097) - seções 2.5 e 2.6
 """
 
 # ╔═╡ a0afa4a8-ca6a-440f-b60c-72c323fc8caa
@@ -602,6 +603,375 @@ begin
 	hline!([0], lc=:navyblue, lw=2, label=:none)
 	hline!([1], lc=:navyblue, lw=2, label=:none)
 	ylims!(-0.5, 1.5)
+end
+
+# ╔═╡ eb2a64ef-de80-44d2-b59e-f1198a6c9abc
+md"
+> **Exercício 7**. Encontre os limites infinitos, limites no infinito e assíntotas para a função $f$ representada no gráfico da figura abaixo
+"
+
+# ╔═╡ 248c9817-618e-479f-8f0f-71d1171f1819
+md"""
+$(Resource("https://raw.githubusercontent.com/pvfonseca/mtm_aplicada/main/notes/figures/aula4_fig7.PNG", width=>600))
+Fonte: Stewart, Clegg, Watson (2022)
+"""
+
+# ╔═╡ 7fd030af-66b9-418b-8cc3-641104087b33
+md"""
+!!! hint "Resolução"
+	Para a função do gráfico, temos:
+
+	$$\begin{eqnarray} \lim_{x\to -1}f(x) &=& \infty \\ \lim_{x\to 2^{-}}f(x) &=& -\infty \\ \lim_{x\to 2^{+}}f(x) &=& \infty \\ \lim_{x\to \infty}f(x) &=& 4 \\ \lim_{x\to -\infty}f(x) &=& 2 \end{eqnarray}$$
+
+	Portanto, as retas $x = -1$ e $x = 2$ são assíntotas verticais. E as retas $y = 4$ e $y = 2$ são assíntotas horizontais
+"""
+
+# ╔═╡ cebdbc30-5234-4a33-a2a4-44bacffe891c
+md"""
+> **Exercício 8**. Encontre $\lim_{x\to \infty}\frac{1}{x}$ e $\lim_{x\to -\infty}\frac{1}{x}$
+"""
+
+# ╔═╡ e5151da5-1b61-4085-a8b8-68e5c8536c33
+md"
+Portanto, temos:
+
+$$\begin{eqnarray}\lim_{x\to\infty}\frac{1}{x} &=& 0\\ \lim_{x\to -\infty}\frac{1}{x} &=& 0\end{eqnarray}$$
+"
+
+# ╔═╡ a4412cc8-7480-4cef-a463-48baea5e2e29
+begin
+	g(x) = 1/x
+	plot(g, -3, -0.1, lc=:indianred, label=:none)
+	plot!(g, 0.1, 3, lc=:indianred, label=L"f(x)=\frac{1}{x}")
+	hline!([0], lc=:black, lw=0.5, label=:none)
+	vline!([0], lc=:black, lw=0.5, label=:none)
+end
+
+# ╔═╡ 9b446173-50c0-4080-be35-d38c97bbb7b6
+md"
+Observe pela tabela de valores numéricos abaixo que quando $x$ é grande, a razão $1/x$ é pequena:
+
+| $x$ | $g(x)$ |
+| :---: | :---: |	
+| $1$ | $(g(1)) |
+| $10$ | $(g(10)) |
+| $100$ | $(g(100)) |
+| $1000$ | $(g(1000)) |
+| $10000$ | $(g(10000)) |
+"
+
+# ╔═╡ a5d0d751-0c20-4e74-8ac0-ad6a924b2130
+md"
+Quando $x$ é grande em valor absoluto (mas negativo), por raciocínio análogo, a razão $1/x$ também é pequena:
+
+| $x$ | $g(x)$ |
+| :---: | :---: |	
+| $-1$ | $(g(-1)) |
+| $-10$ | $(g(-10)) |
+| $-100$ | $(g(-100)) |
+| $-1000$ | $(g(-1000)) |
+| $-10000$ | $(g(-10000)) |
+"
+
+# ╔═╡ b2659fdf-5c57-47c0-b014-ade176d9dae3
+md"
+### Calculando limites no infinito
+"
+
+# ╔═╡ 3d51d9fd-7a66-48c5-a39f-1b8822944cae
+md"
+* A maioria das propriedades de limites que discutimos anteriormente também é válida para limites no infinito
+"
+
+# ╔═╡ 73f54046-aba2-4ecd-a7e5-ad0ed5232a8f
+md"""
+!!! warning "Limites no infinito"
+	Pode ser demonstrado que as propriedades de limites que discutimos permanecem válidas quando substituímos $x\to a$ por $x\to \infty$ ou $x\to -\infty$
+
+	Com exceção das seguintes propriedades:
+
+	$$\begin{eqnarray}\lim_{x\to a} x^n &=& a^n, \qquad n\in\mathbb{Z}_+\\ \lim_{x\to a}\sqrt[n]{x} &=& \sqrt[n]{a}, \qquad n\in\mathbb{Z}_+\end{eqnarray}$$
+"""
+
+# ╔═╡ 3e9efbf0-c1c5-4260-ab9c-4e43eb5a1b95
+md"
+* Em particular, se combinamos as propriedades da potência e da raiz com o resultado do **Exercício 8** que vimos anteriormente, temos o seguinte teorema
+* Lembrando as propriedades acima mencionadas:
+
+$$\begin{eqnarray}\lim_{x\to a}[f(x)]^n &=& \left[\lim_{x\to a} f(x)\right]^n, \qquad n\in\mathbb{Z}_+ \\ \lim_{x\to a}\sqrt[n]{f(x)} &=& \sqrt[n]{\lim_{x\to a} f(x)}, \qquad n\in\mathbb{Z}_+\end{eqnarray}$$
+"
+
+# ╔═╡ 1d972de8-0a70-4de5-8626-cd9851f1cf2f
+md"""
+!!! info "Teorema 4.7"
+	Se $r > 0$ for um número racional, então:
+
+	$$\lim_{x\to \infty} \frac{1}{x^r} = 0$$
+
+	Se $r > 0$ for um número racional tal que $x^r$ seja definido para todo $x$, então:
+
+	$$\lim_{x\to -\infty} \frac{1}{x^r} = 0$$
+"""
+
+# ╔═╡ ef6c587f-1fa5-4a1c-99d7-118d903bf253
+md"""
+> **Exercício 9**. Calcule os seguintes limites:
+>
+> (a) $\lim_{x\to\infty}\frac{3x^2-x-2}{5x^2+4x+1}$
+>
+> (b) $\lim_{x\to\infty}\left(\sqrt{x^2+1} - x\right)$
+>
+> (c) $\lim_{x\to -\infty} e^x$
+>
+> (d) $\lim_{x\to 0^{-}} e^{1/x}$
+"""
+
+# ╔═╡ 8037b649-5249-4daa-987f-80562f44ff69
+md"""
+!!! hint "Resolução"
+	(a) Note que quando $x$ cresce, tanto o numerador quanto o denominador também crescem e, portanto, não é evidente o que acontece com a razão entre eles.
+
+	Podemos manipular algebricamente a expressão para calcular o limite no infinito. Dividiremos tanto o numerador quanto o denominador pela maior potência de $x$ que ocorre no denominador. Portanto:
+
+	$$\begin{eqnarray}\lim_{x\to \infty}\frac{3x^2-x-2}{5x^2+4x+1} &=& \lim_{x\to \infty}\frac{\frac{3x^2-x-2}{x^2}}{\frac{5x^2+4x+1}{x^2}} \\ &=& \lim_{x\to \infty}\frac{3-\frac{1}{x}-\frac{2}{x^2}}{5+\frac{4}{x}+\frac{1}{x^2}} \\
+	&=& \frac{\lim_{x\to\infty}\left(3-\frac{1}{x}-\frac{2}{x^2}\right)}{\lim_{x\to\infty}\left(5+\frac{4}{x}+\frac{1}{x^2}\right)} \\ &=& \frac{3}{5}\end{eqnarray}$$
+
+	Um cálculo análogo possibilita concluir que $\lim_{x\to -\infty}\frac{3x^2-x-2}{5x^2+4x+1} = \frac{3}{5}$
+
+	(b) Como tanto $\sqrt{x^2+1}$ quanto $x$ são grandes quando $x$ é grande, a diferença entre estes dois termos parece inconclusiva. Podemos manipular algebricamente a expressão multiplicando tanto o numerador quanto o denominador pelo conjugado radical:
+
+	$$\begin{eqnarray}\lim_{x\to\infty}\left(\sqrt{x^2+1}-x\right) &=& \lim_{x\to\infty}\left(\sqrt{x^2+1}-x\right) \frac{\sqrt{x^2+1}+x}{\sqrt{x^2+1}+x} \\ &=& \lim_{x\to\infty}\frac{1}{\sqrt{x^2+1}+x} \\ &=& 0\end{eqnarray}$$
+
+	(c) O gráfico da função exponencial natural $y = e^x$ tem a reta $y = 0$ (eixo horizontal) como uma assíntota horizontal. Note que à medida que $x$ torna-se muito grande em valor absoluto (mas negativo), o termo $e^x$ torna-se cada vez menor, tendendo a 0 de maneira muito rápida
+
+	| $x$ | $e^x$ |
+	| :---: | :---: |
+	| 0 | 1 |
+	| -1 | 0,36788 |
+	| -2 | 0,13534 |
+	| -3 | 0,04979 |
+	| -5 | 0,00674 |
+	| -8 | 0,00034 |
+	| -10 | 0,00005 |
+
+	Portanto:
+
+	$$\lim_{x\to -\infty} e^x = 0$$
+
+	(d) Defina $t = 1/x$. Note que $t\to -\infty$ quando $x\to 0^{-}$. Portanto:
+
+	$$\lim_{x\to 0^{-}} e^{1/x} = \lim_{t\to -\infty}e^t = 0$$
+"""
+
+# ╔═╡ fd833f66-c1eb-4f57-952d-a18f0597d503
+begin
+	plot(x->(3x^2-x-2)/(5x^2+4x+1), -5, 5, lc=:indianred, label=L"y = \frac{3x^2-x-2}{5x^2+4x+1}")
+	hline!([0], lc=:black, lw=0.5, label=:none)
+	vline!([0], lc=:black, lw=0.5, label=:none)
+	hline!([0.6], lc=:darkblue, lw=1, label=:none)
+end
+
+# ╔═╡ 1425a7fc-8a10-488c-a1e2-50e586b63857
+begin
+	plot(x->√(x^2+1) - x, -3, 5, lc=:indianred, label=L"y = \sqrt{x^2+1} - x")
+	hline!([0], lc=:black, lw=0.5, label=:none)
+	vline!([0], lc=:black, lw=0.5, label=:none)
+	hline!([0], lc=:darkblue, lw=2, label=:none)
+end
+
+# ╔═╡ 09e6e0ef-cef9-4a50-9963-d7d929a9e969
+begin
+	plot(x->exp(x), -3, 1, lc=:indianred, label=L"y = e^x")
+	hline!([0], lc=:black, lw=0.5, label=:none)
+	vline!([0], lc=:black, lw=0.5, label=:none)
+	hline!([0], lc=:darkblue, lw=2, label=:none)
+end
+
+# ╔═╡ 8a476b16-9613-4c1e-88bb-0da34301772f
+begin
+	plot(x->exp(1/x), -1, 0, lc=:indianred, label=L"y = e^{\frac{1}{x}}")
+	hline!([0], lc=:black, lw=0.5, label=:none)
+	vline!([0], lc=:black, lw=0.5, label=:none)
+	hline!([0], lc=:darkblue, lw=2, label=:none)
+end
+
+# ╔═╡ 64dc8c92-8204-4597-a226-f3954cffa6b7
+md"
+> **Exercício 10**. Determine as assíntotas horizontais e verticais do gráfico da função:
+>
+> $$f(x) = \frac{\sqrt{2x^2+1}}{3x-5}$$
+"
+
+# ╔═╡ bf3d2b18-e444-4043-ac82-8ca3155db9bc
+md"""
+!!! hint "Resolução"
+	Cálculo do limite quando $x$ tende a $\infty$
+
+	$$\begin{eqnarray}\lim_{x\to\infty}\frac{\sqrt{2x^2+1}}{3x-5} &=& \lim_{x\to\infty} \frac{\frac{\sqrt{2x^2+1}}{x}}{\frac{3x-5}{x}} \\
+	&=& \frac{\lim_{x\to\infty}\sqrt{2+\frac{1}{x^2}}}{\lim_{x\to\infty}\left(3-\frac{5}{x}\right)} \\ &=&\frac{\sqrt{2}}{3}
+	\end{eqnarray}$$
+
+	Portanto, a reta $y = \sqrt{2}/3$ é uma assíntota horizontal do gráfico da função $f$
+
+	No cálculo do limite quando $x\to -\infty$, lembre que para $x < 0$, temos $\sqrt{x^2} = |x| = -x$. Portanto, quando dividimos o numerador por $x$, para $x < 0$, obtemos:
+
+	$$\frac{\sqrt{2x^2 + 1}}{x} = \frac{\sqrt{2x^2 + 1}}{-\sqrt{x^2}} = -\sqrt{\frac{2x^2+1}{x^2}} = -\sqrt{2+\frac{1}{x^2}}$$
+
+	Logo:
+
+	$$\lim_{x\to -\infty}\frac{\sqrt{2x^2+1}}{3x-5} = \lim_{x\to -\infty}\frac{-\sqrt{2+\frac{1}{x^2}}}{3-\frac{5}{x}} = -\frac{\sqrt{2}}{3}$$
+
+	Portanto, a reta $y = -\sqrt{2}/3$ também é uma assíntota horizontal.
+
+	Por fim, note que a reta $x = 5/3$ é uma assíntota vertical.
+"""
+
+# ╔═╡ 4e0dfdb6-f156-4f01-a7fb-236690226211
+begin
+	plot(x->(√(2x^2+1))/(3x-5), -5, 1.4, lc=:indianred, label=L"y = \frac{\sqrt{2x^2+1}}{3x-5}")
+	plot!(x->(√(2x^2+1))/(3x-5), 1.8, 7, lc=:indianred, label=:none)
+	hline!([0], lc=:black, lw=0.5, label=:none)
+	vline!([0], lc=:black, lw=0.5, label=:none)
+	vline!([5/3], lc=:darkblue, lw=1, label=:none)
+	hline!([-√2/3], lc=:darkblue, lw=1, label=:none)
+	hline!([√2/3], lc=:darkblue, lw=1, label=:none)
+end
+
+# ╔═╡ 95e28817-ba36-4e4d-a2b6-0fb0b75e197f
+md"
+### Limites infinitos no infinito
+"
+
+# ╔═╡ 68b7fc71-e6e5-450e-b127-bf74b9276437
+md"
+* Para indicar que os valores de $f(x)$ tornam-se grandes quando $x$ se torna grande, utilizamos a seguinte notação:
+
+$$\lim_{x\to\infty}f(x) = \infty$$
+
+* Significados análogos são dados aos seguintes símbolos:
+
+$$\lim_{x\to -\infty}f(x) = \infty \qquad \lim_{x\to \infty}f(x) = -\infty \qquad \lim_{x\to -\infty}f(x) = -\infty$$
+"
+
+# ╔═╡ f8a92e00-7fa3-4ffb-9817-05a51be49331
+md"
+> **Exercício 11**. Calcule $lim_{x\to\infty} x^3$ e $lim_{x\to -\infty} x^3$
+"
+
+# ╔═╡ 79a5b369-ea0b-40e9-a95b-7c57c207ae6d
+md"""
+!!! hint "Resolução"
+	Quando $x$ se torna grande, $x^3$ também fica grande. Podemos notar isso pela tabela de valores numéricos:
+
+	| $x$ | $x^3$ |
+	| :---: | :---: |
+	| 1 | 1 |
+	| 10 | 1000 |
+	| 100 | 1000000 |
+	| 1000 | 1000000000 |
+
+	Portanto: $\lim_{x\to\infty} x^3 = \infty$
+
+	De maneira similar, quando $x$ é muito grande em módulo, porém negativo, $x^3$ também o é.
+
+	Portanto: $\lim_{x\to -\infty} x^3 = -\infty$
+"""
+
+# ╔═╡ 73fe1ce6-f113-4135-9ab1-f71acc744806
+begin
+	plot(x->x^3, -5, 5, lc=:indianred, label=L"y = x^3")
+	hline!([0], lc=:black, lw=0.5, label=:none)
+	vline!([0], lc=:black, lw=0.5, label=:none)
+end
+
+# ╔═╡ a7037dc7-9248-40a3-bfde-199b2a977da4
+md"
+> **Exercício 12**. Calcule $\lim_{x\to\infty} e^x$
+"
+
+# ╔═╡ 634a7ff8-525b-4227-957a-b13b88288f64
+begin
+	plot(x->exp(x), -3, 5, lc=:indianred, label=L"y = e^x")
+	hline!([0], lc=:black, lw=0.5, label=:none)
+	hline!([0], lc=:darkblue, lw=1, label=:none)
+	vline!([0], lc=:black, lw=0.5, label=:none)
+end
+
+# ╔═╡ 7562b044-7530-40c8-b5d1-60b45b4bdb4a
+md"
+* Note que mesmo que $\lim_{x\to\infty} x^3 = \infty$ e $\lim_{x\to\infty} e^x = \infty$, a função exponencial cresce muito mais rapidamente que a função cúbica à medida que $x\to\infty$
+"
+
+# ╔═╡ b955fa7c-dd38-420b-88f2-4f335ed37cee
+begin
+	plot(x->exp(x), 0, 6, label=L"y = e^x")
+	plot!(x->x^3, 0, 6, label=L"y = x^3")
+	hline!([0], lc=:black, lw=0.5, label=:none)
+	hline!([0], lc=:darkblue, lw=1, label=:none)
+	vline!([0], lc=:black, lw=0.5, label=:none)
+end
+
+# ╔═╡ 33da7e98-ba35-4c62-9b6c-ddff8382cde0
+md"
+> **Exercício 13**. Encontre $\lim_{x\to\infty} (x^2-x)$
+"
+
+# ╔═╡ 23c5875a-62c4-4600-92ea-9e4600875daf
+md"""
+!!! hint "Resolução"
+	Note que não podemos utilizar a propriedade que vimos anteriormente de que o limite das diferenças é a diferença entre os limites, isso porque os limites não existem, isto é: $\lim_{x\to\infty} x^2 = \infty$ e $\lim_{x\to\infty}x = \infty$.
+
+	Portanto, as propriedades dos limites não podem ser aplicadas aos limites infinitos, pois $\infty$ não é um número.
+
+	No entanto, temos que:
+
+	$$\lim_{x\to\infty} (x^2 - x) = \lim_{x\to\infty} x(x-1) = \infty$$
+
+	Isso porque, como $x$ e $x - 1$ tornam-se arbitrariamente grandes quando $x\to\infty$, o mesmo acontece com o produto entre esses termos
+"""
+
+# ╔═╡ f95da5f7-faaa-410f-b1a3-d2e1efc9faf7
+begin
+	plot(x->x^2-x, -1, 10, lc=:indianred, label=L"y = x^2-x")
+	vline!([0], lc=:black, lw=0.5, label=:none)
+	hline!([0], lc=:black, lw=0.5, label=:none)
+end
+
+# ╔═╡ 7ff00e6d-44b5-4dc7-b1af-57f594888d9c
+md"
+> **Exercício 14**. Encontre $\lim_{x\to\infty} \frac{x^2+x}{3-x}$
+"
+
+# ╔═╡ 03e3a3a0-c837-43dd-89bc-cc72996b791d
+md"""
+!!! hint "Resolução"
+	Manipulando algebricamente a expressão, temos:
+	
+	$$\lim_{x\to\infty} \frac{x^2+x}{3-x} = \lim_{x\to\infty}\frac{x+1}{\frac{3}{x}-1} = -\infty$$
+
+	Pois $x + 1 \to \infty$ e $3/x - 1 \to 0 - 1 = -1$ quando $x\to\infty$
+"""
+
+# ╔═╡ c2ff5d3a-feb8-4e47-8037-aa4df820869d
+begin
+	plot(x->(x^2+x)/(3-x), -40, 2.95, lc=:indianred, label=L"y = \frac{x^2+x}{3-x}")
+	plot!(x->(x^2+x)/(3-x), 3.05, 40, lc=:indianred, label=:none)
+	vline!([0], lc=:black, lw=0.5, label=:none)
+	vline!([3], lc=:darkblue, lw=1, label=:none)
+	hline!([0], lc=:black, lw=0.5, label=:none)
+	hline!([0], lc=:black, lw=0.5, label=:none)
+end
+
+# ╔═╡ a14d93cd-21a7-4084-b110-a2afc63e2bd1
+md"""
+> **Exercício 15**. Esboce o gráfico da função $(x-2)^4(x+1)^3(x-1)$ encontrando suas intersecções com os eixos e seus limites quando $x\to\infty$ e quando $x\to -\infty$
+"""
+
+# ╔═╡ 7ed10185-a2be-4635-819a-7f963dd44f47
+begin
+	plot(x->(x-2)^4*(x+1)^3*(x-1), -1.3, 2.5, lc=:indianred, label=L"y = (x-2)^4(x+1)^3(x-1)")	
+	vline!([0], lc=:black, lw=0.5, label=:none)	
+	hline!([0], lc=:black, lw=0.5, label=:none)	
 end
 
 # ╔═╡ bf0b18e9-1ae7-4ccb-9b37-1cd7491c0099
@@ -1706,6 +2076,45 @@ version = "1.4.1+0"
 # ╟─92c03fff-a2f1-49c0-a79f-2654bff70e3b
 # ╟─932157c3-beae-4e56-a8ea-7c361c2010ce
 # ╟─3fb0c6a8-dd2a-489a-84cb-1cd714b797c5
+# ╟─eb2a64ef-de80-44d2-b59e-f1198a6c9abc
+# ╟─248c9817-618e-479f-8f0f-71d1171f1819
+# ╟─7fd030af-66b9-418b-8cc3-641104087b33
+# ╟─cebdbc30-5234-4a33-a2a4-44bacffe891c
+# ╟─9b446173-50c0-4080-be35-d38c97bbb7b6
+# ╟─a5d0d751-0c20-4e74-8ac0-ad6a924b2130
+# ╟─e5151da5-1b61-4085-a8b8-68e5c8536c33
+# ╟─a4412cc8-7480-4cef-a463-48baea5e2e29
+# ╟─b2659fdf-5c57-47c0-b014-ade176d9dae3
+# ╟─3d51d9fd-7a66-48c5-a39f-1b8822944cae
+# ╟─73f54046-aba2-4ecd-a7e5-ad0ed5232a8f
+# ╟─3e9efbf0-c1c5-4260-ab9c-4e43eb5a1b95
+# ╟─1d972de8-0a70-4de5-8626-cd9851f1cf2f
+# ╟─ef6c587f-1fa5-4a1c-99d7-118d903bf253
+# ╟─8037b649-5249-4daa-987f-80562f44ff69
+# ╟─fd833f66-c1eb-4f57-952d-a18f0597d503
+# ╟─1425a7fc-8a10-488c-a1e2-50e586b63857
+# ╟─09e6e0ef-cef9-4a50-9963-d7d929a9e969
+# ╟─8a476b16-9613-4c1e-88bb-0da34301772f
+# ╟─64dc8c92-8204-4597-a226-f3954cffa6b7
+# ╟─bf3d2b18-e444-4043-ac82-8ca3155db9bc
+# ╟─4e0dfdb6-f156-4f01-a7fb-236690226211
+# ╟─95e28817-ba36-4e4d-a2b6-0fb0b75e197f
+# ╟─68b7fc71-e6e5-450e-b127-bf74b9276437
+# ╟─f8a92e00-7fa3-4ffb-9817-05a51be49331
+# ╟─79a5b369-ea0b-40e9-a95b-7c57c207ae6d
+# ╟─73fe1ce6-f113-4135-9ab1-f71acc744806
+# ╟─a7037dc7-9248-40a3-bfde-199b2a977da4
+# ╟─634a7ff8-525b-4227-957a-b13b88288f64
+# ╟─7562b044-7530-40c8-b5d1-60b45b4bdb4a
+# ╟─b955fa7c-dd38-420b-88f2-4f335ed37cee
+# ╟─33da7e98-ba35-4c62-9b6c-ddff8382cde0
+# ╟─23c5875a-62c4-4600-92ea-9e4600875daf
+# ╟─f95da5f7-faaa-410f-b1a3-d2e1efc9faf7
+# ╟─7ff00e6d-44b5-4dc7-b1af-57f594888d9c
+# ╟─03e3a3a0-c837-43dd-89bc-cc72996b791d
+# ╟─c2ff5d3a-feb8-4e47-8037-aa4df820869d
+# ╟─a14d93cd-21a7-4084-b110-a2afc63e2bd1
+# ╟─7ed10185-a2be-4635-819a-7f963dd44f47
 # ╟─bf0b18e9-1ae7-4ccb-9b37-1cd7491c0099
 # ╟─dc1df860-841a-4a07-8bed-7c776c6b5bb4
 # ╟─00000000-0000-0000-0000-000000000001
