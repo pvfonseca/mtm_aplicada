@@ -554,6 +554,56 @@ md"""
 	Ver Stewart, Clegg, Watson (2022)
 """
 
+# ╔═╡ 7d41c731-4d2d-4165-bceb-b6f2242192e1
+md"""
+Exemplos de limites no infinito
+
+$(Resource("https://raw.githubusercontent.com/pvfonseca/mtm_aplicada/main/notes/figures/aula4_fig6.PNG", width=>600))
+Fonte: Stewart, Clegg, Watson (2022)
+"""
+
+# ╔═╡ 0b730b99-1d36-4eeb-815d-165f9897db75
+md"
+* Note, pela figura anterior, que existem várias formas de o gráfico de $f$ aproximar-se da reta $y = L$ (**assíntota horizontal**)
+"
+
+# ╔═╡ af7d6b5b-6177-4119-b11a-b09801ee8213
+md"""
+!!! correct "Definição (Intuitiva) 4.5 - Limite no infinito"
+	Seja $f$ uma função definida em algum intervalo $(-\infty, a)$. Então:
+
+	$$\lim_{x\to -\infty} f(x) = L$$
+
+	significa que os valores de $f(x)$ ficam arbitrariamente próximos de $L$ tornando $x$ suficientemente grande em valor absoluto, mas negativo
+"""
+
+# ╔═╡ 92c03fff-a2f1-49c0-a79f-2654bff70e3b
+md"""
+!!! correct "Definição 4.6 - Assíntota horizontal"
+	A reta $y = L$ é chamada **assíntota horizontal** da curva $y = f(x)$ se:
+
+	$$\lim_{x\to\infty} f(x) = L \qquad \text{ ou } \qquad \lim_{x\to -\infty} f(x) = L$$
+"""
+
+# ╔═╡ 932157c3-beae-4e56-a8ea-7c361c2010ce
+md"
+* No exemplo anterior, a reta $y = 1$ era a assíntota horizontal do gráfico da função $f$
+* Uma curva pode possuir mais do que uma assíntota
+* Considere, por exemplo, a função
+
+$$g(x) = \frac{1}{1 + e^{-x}}$$
+"
+
+# ╔═╡ 3fb0c6a8-dd2a-489a-84cb-1cd714b797c5
+begin
+	plot(x -> 1/(1+exp(-x)), -5, 5, lc=:indianred, label=L"g(x) = \frac{1}{1+e^{-x}}")
+	hline!([0], lc=:black, lw=0.5, label=:none)
+	vline!([0], lc=:black, lw=0.5, label=:none)
+	hline!([0], lc=:navyblue, lw=2, label=:none)
+	hline!([1], lc=:navyblue, lw=2, label=:none)
+	ylims!(-0.5, 1.5)
+end
+
 # ╔═╡ bf0b18e9-1ae7-4ccb-9b37-1cd7491c0099
 md"
 ## 📚 Bibliografia
@@ -1650,6 +1700,12 @@ version = "1.4.1+0"
 # ╟─418cd7f3-ff3f-4e53-8702-f36383a6897c
 # ╟─ffab4ca8-78cc-43dc-ad10-774ed9201f18
 # ╟─880ef139-fcd9-405f-b1a1-9a53662771c7
+# ╟─7d41c731-4d2d-4165-bceb-b6f2242192e1
+# ╟─0b730b99-1d36-4eeb-815d-165f9897db75
+# ╟─af7d6b5b-6177-4119-b11a-b09801ee8213
+# ╟─92c03fff-a2f1-49c0-a79f-2654bff70e3b
+# ╟─932157c3-beae-4e56-a8ea-7c361c2010ce
+# ╟─3fb0c6a8-dd2a-489a-84cb-1cd714b797c5
 # ╟─bf0b18e9-1ae7-4ccb-9b37-1cd7491c0099
 # ╟─dc1df860-841a-4a07-8bed-7c776c6b5bb4
 # ╟─00000000-0000-0000-0000-000000000001
