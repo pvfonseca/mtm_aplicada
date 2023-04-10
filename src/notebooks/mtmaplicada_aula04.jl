@@ -45,19 +45,6 @@ md"""
 	▶️ Stewart, Clegg, Watson (2022). [Cálculo: volume I](https://app.minhabiblioteca.com.br/reader/books/9786555584097) - seções 2.5 e 2.6
 """
 
-# ╔═╡ a0afa4a8-ca6a-440f-b60c-72c323fc8caa
-md"""
-$(Resource("https://upload.wikimedia.org/wikipedia/commons/8/8b/Charles_Hermite.jpg", width=>300))
-"""
-
-# ╔═╡ 734a8ceb-02ff-4650-9f51-dc5ff10156c3
-md"""
-!!! info ""
-	"I turn away with fright and horror from the lamentable evil of functions which do not have derivatives."
-
-	[Charles Hermite (1822 - 1901)](https://en.wikipedia.org/wiki/Charles_Hermite) - matemático francês
-"""
-
 # ╔═╡ d7aa7455-03f4-4c22-ad15-3857cb58a36a
 md"
 ## Continuidade de uma função
@@ -2010,8 +1997,6 @@ version = "1.4.1+0"
 # ╟─7ed28a28-70ab-48bc-9156-7b9f5c97e48b
 # ╟─6306fac3-f736-482a-b603-493fde0868bd
 # ╟─b5d5892c-1921-4b8d-b782-aaa2442b4790
-# ╟─a0afa4a8-ca6a-440f-b60c-72c323fc8caa
-# ╟─734a8ceb-02ff-4650-9f51-dc5ff10156c3
 # ╟─d7aa7455-03f4-4c22-ad15-3857cb58a36a
 # ╟─4c27ff21-21c0-4816-a256-c34f85080f47
 # ╟─c6659141-32d9-4caf-9be6-1ff949cd0738
