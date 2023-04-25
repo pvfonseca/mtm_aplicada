@@ -154,7 +154,7 @@ md"""
 
 # ╔═╡ ba62d8c4-2da8-481f-95b2-a92fe761545e
 begin
-	zoom = @bind zoom_reta Slider(range(0.2, 3, 100), default = 2.5)
+	zoom = @bind zoom_reta Slider(range(3, 0.2, 100), default = 3)
 	md"""
 	Zoom: 
 	
@@ -683,7 +683,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.5"
 manifest_format = "2.0"
-project_hash = "e9be83a6c7fd21f04cfc4051871fb477d5cc6cf9"
+project_hash = "378f739220c3378e596c6ed6d9090ffcfe2c72b8"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
