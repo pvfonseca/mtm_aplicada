@@ -598,6 +598,63 @@ md"""
 	$$\lim_{x\to a} |f'(x)| = \infty$$
 """
 
+# ╔═╡ 23d3cf6e-588c-434f-8322-3566218f7e54
+md"""
+$(Resource("https://raw.githubusercontent.com/pvfonseca/mtm_aplicada/main/notes/figures/aula5_fig4.PNG", width=>800))
+Fonte: Stewart, Clegg e Watson (2022)
+"""
+
+# ╔═╡ 9bc2cba4-ab28-4daa-b60b-5f34dd46e3a0
+md"
+## Derivadas de ordem superior
+"
+
+# ╔═╡ 17e62022-8382-4e36-8eb5-3cd68658365a
+md"
+* Se $f$ for uma função diferenciável, então, sua derivada $f'$ também é uma função
+* A função derivada $f'$, portanto, também pode possuir sua própria derivada
+* A derivada de uma derivada é denominada **segunda derivada de $f$** ou derivada de segunda ordem
+* Utilizamos as seguintes notações para a derivada de segunda ordem da função $y = f(x)$:
+
+$$f''(x) \qquad \text{ ou } \qquad \frac{d}{dx}\left(\frac{dy}{dx}\right) = \frac{d^2y}{dx^2}$$
+
+* A segunda derivada de uma função pode ser interpretada como a taxa de variação de uma taxa de variação
+* Em termos físicos, a **aceleração** é uma derivada de segunda ordem
+"
+
+# ╔═╡ 70c75ccf-8e27-48dc-82c5-ff7349a666b8
+md"
+* O processo de diferenciação pode continuar
+* Em termos gerais, a $n$-ésima derivada de $f$ pode ser obtida derivando a função $f$ por $n$ vezes
+* Denotamos a $n$-ésima derivada da função $y = f(x)$ das seguintes formas:
+
+$$y^{(n)} = f^{(n)}(x) = \frac{d^n y}{dx^n}$$
+"
+
+# ╔═╡ 2f7bf1d1-7ac7-4dda-a44a-3a9f8fefc60f
+md"""
+> **Exercício.** Seja $f(x) = x^3-x$, calcule $f''(x), f'''(x)$ e $f^{(4)}(x)$
+"""
+
+# ╔═╡ 1f4bd90c-2982-4a3c-971a-21bed7fef3a4
+md"""
+!!! hint "Resolução"
+	Vimos, anteriormente, que $f'(x) = 3x^2 - 1$. Portanto:
+
+	$$\begin{eqnarray}f''(x) = (f')'(x) &=& \lim_{h\to 0}\frac{f'(x + h) - f'(x)}{h} \\ &=& \lim_{h\to 0}\frac{[3(x + h)^2 - 1] - [3x^2 - 1]}{h} \\ &=& \lim_{h\to 0}\frac{3x^2 + 6xh + 3h^2 - 1 - 3x^2 + 1}{h} \\ &=& \lim_{h\to 0}\frac{6xh+3h^2}{h} = \lim_{h\to 0}(6x + 3h) = 6x
+	\end{eqnarray}$$
+
+	Como $f''(x) = 6x$, podemos calcular a derivada de terceira ordem:
+
+	$$\begin{eqnarray}f'''(x) = (f'')'(x) &=& \lim_{h\to 0}\frac{f''(x + h) - f''(x)}{h} \\ &=& \lim_{h\to 0}\frac{6(x + h) - 6x}{h} \\ &=& \lim_{h\to 0}\frac{6h}{h} = 6
+	\end{eqnarray}$$
+
+	Por fim, dado que $f^{(3)}(x) = 6$, temos:
+
+	$$\begin{eqnarray}f^{(4)}(x) = (f''')'(x) &=& \lim_{h\to 0}\frac{f'''(x + h) - f'''(x)}{h} \\ &=& \lim_{h\to 0}\frac{6 - 6}{h} = 0
+	\end{eqnarray}$$
+"""
+
 # ╔═╡ 28ce946c-bdf4-449d-837b-397dea53b010
 md"
 ## 📚 Bibliografia
@@ -1655,7 +1712,13 @@ version = "1.4.1+0"
 # ╟─04043bc4-f3a1-469f-97eb-971745f1fb9b
 # ╟─60e5f05b-f983-47a3-a3eb-80a553abd895
 # ╟─c2047dc8-1b81-4c46-8c00-87818b48b522
-# ╠═398c1179-d86f-44b5-b6ed-05603ef58284
+# ╟─398c1179-d86f-44b5-b6ed-05603ef58284
+# ╟─23d3cf6e-588c-434f-8322-3566218f7e54
+# ╟─9bc2cba4-ab28-4daa-b60b-5f34dd46e3a0
+# ╟─17e62022-8382-4e36-8eb5-3cd68658365a
+# ╟─70c75ccf-8e27-48dc-82c5-ff7349a666b8
+# ╟─2f7bf1d1-7ac7-4dda-a44a-3a9f8fefc60f
+# ╟─1f4bd90c-2982-4a3c-971a-21bed7fef3a4
 # ╟─28ce946c-bdf4-449d-837b-397dea53b010
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
