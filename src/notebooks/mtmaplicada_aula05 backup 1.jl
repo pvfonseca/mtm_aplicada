@@ -51,19 +51,6 @@ md"""
 	▶️ **Leitura obrigatória**: Stewart, Clegg, Watson (2022) - [Cálculo: volume I](https://app.minhabiblioteca.com.br/reader/books/9786555584097): Seções 2.7 e 2.8
 """
 
-# ╔═╡ 18d64874-c6b1-4b17-9ead-2fc6978c8cea
-md"""
-$(Resource("https://upload.wikimedia.org/wikipedia/commons/6/65/Charles_Hermite_circa_1887.jpg", width=>300))
-"""
-
-# ╔═╡ 9c759fdf-a018-44f8-8aac-3247eb549c2d
-md"""
-!!! info ""
-	"I turn away with fright and horror from the lamentable evil of functions which do not have derivatives."
-
-	[Charles Hermite](https://en.wikipedia.org/wiki/Charles_Hermite) (1822 - 1901) - matemático francês
-"""
-
 # ╔═╡ ddd2aff4-1a08-47f7-9258-fe8a06aeb95c
 md"
 ## Tangentes
@@ -196,7 +183,7 @@ md"""
 
 # ╔═╡ 8ef626f2-a680-4ab4-ac01-399007973d92
 md"""
-!!! hint "Resolução"
+!!! info "Resolução"
 	A inclinação da reta tangente em $(3,1)$ é:
 
 	$$\begin{eqnarray}m &=& \lim_\limits{h \to 0}\frac{f(3+h)-f(3)}{h} = \lim_\limits{h \to 0}\frac{\frac{3}{3+h}-1}{h} \\ &=& \lim_\limits{h \to 0}\frac{\frac{3-(3+h)}{3+h}}{h} = \lim_\limits{h \to 0}\frac{-h}{h(3+h)} = -\frac{1}{3}\end{eqnarray}$$
@@ -328,7 +315,6 @@ $$\frac{\Delta y}{\Delta x} = \frac{f(x_2) - f(x_2)}{x_2 - x_1}$$
 # ╔═╡ 0c259a67-48b8-4cb0-ae79-1a7e0d78fffb
 md"""
 $(Resource("https://raw.githubusercontent.com/pvfonseca/mtm_aplicada/main/notes/figures/aula5_fig1.PNG", width=>800))
-Fonte: Stewart, Clegg e Watson (2022)
 """
 
 # ╔═╡ b9be4b60-4fb9-4037-b1f8-8ca4a593b49e
@@ -360,7 +346,6 @@ md"
 # ╔═╡ 87f2e21f-c091-49e3-b0e5-cf65d43bb494
 md"""
 $(Resource("https://raw.githubusercontent.com/pvfonseca/mtm_aplicada/main/notes/figures/aula5_fig2.PNG", width=>800))
-Fonte: Stewart, Clegg e Watson (2022)
 """
 
 # ╔═╡ 5f3a955b-8231-4c1a-9935-b22b176c492d
@@ -441,163 +426,6 @@ md"""
 	💡 Uma forma alternativa seria traçar a função da dívida com relação ao tempo e estimar a inclinação da reta tangente em $t = 2008$
 """
 
-# ╔═╡ fb081184-d184-4dae-9da8-9d20432665a6
-md"
-## Funções diferenciáveis
-"
-
-# ╔═╡ 56379eb0-6e59-4316-a088-51e143302f51
-md"
-* Anteriormente vimos a definição da derivada de uma função $f$ avaliada em um ponto $a$
-* Nosso objetivo agora é permitir que este número $a$ varie
-* Neste caso, temos uma nova função - chamada **derivada de $f$** - definida por:
-
-$$f'(x) = \lim_{h\to 0}\frac{f(x + h) - f(x)}{h}$$
-
-para qualquer número $x$ para o qual esse limite exista
-"
-
-# ╔═╡ 041aacd0-65ca-4925-a99e-d64ad12b67d5
-md"""
-!!! warning "Domínio da função derivada"
-	O domínio de $f'$ é o conjunto $\{x| f'(x) \text{ existe}\}$ e pode ser menor que o domínio de $f$
-"""
-
-# ╔═╡ 49eea7dd-89c7-4868-ae6b-70d7c31efadd
-md"""
-Esboço do gráfico da derivada a partir da inclinação das retas tangentes à curva da função original
-$(Resource("https://raw.githubusercontent.com/pvfonseca/mtm_aplicada/main/notes/figures/aula5_fig3.PNG", width=>800))
-Fonte: Stewart, Clegg e Watson (2022)
-"""
-
-# ╔═╡ 27fff356-420a-4769-b846-d79eee9b5c7b
-md"""
-> **Exercício.** Se $f(x) = x^3 - x$, encontre a função derivada $f'(x)$ e compare os gráficos de $f$ e $f'$
-"""
-
-# ╔═╡ 4e5d90a6-f2b4-402a-8df1-e91a10440c0a
-md"""
-!!! hint "Resolução"
-	Utilizando a definição, temos:
-
-	$$\begin{eqnarray}f'(x) &=& \lim_{h\to 0}\frac{f(x + h) - f(x)}{h} \\ &=& \lim_{h\to 0}\frac{[(x + h)^3 - (x + h)] - [x^3 - x]}{h} \\ &=& \lim_{h\to 0} \frac{[x^3 + 3x^2h + 3xh^2 + h^3 - x - h - x^3 + x]}{h} \\ &=& \lim_{h\to 0}\frac{3x^2h + 3xh^2 + h^3 - h}{h} \\ &=& \lim_{h\to 0}(3x^2 + 3xh + h^2 - 1) = 3x^2 - 1\end{eqnarray}$$
-"""
-
-# ╔═╡ 3214cb20-acc0-4c4c-bc85-288a6350c568
-begin
-	plot(x-> x^3 - x, -10, 10, lc=:indianred, label=L"f(x) = x^3 - x")
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)	
-end
-
-# ╔═╡ a4f4dc3b-788b-4d04-a81b-3c2a4ed32b02
-begin
-	plot(x-> 3x^2 - 1, -10, 10, lc=:indianred, label=L"f'(x) = 3x^2 - 1")
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)	
-end
-
-# ╔═╡ f08cb7c4-582b-47ce-bebe-b51faafa0b88
-md"""
-> **Exercício.** Se $f(x) = \sqrt{x}$, encontre a função derivada $f'(x)$, compare os gráficos de $f$ e $f'$ e determine o domínio das funções
-"""
-
-# ╔═╡ 42461d4b-8314-4860-bb7d-23c41e61568a
-md"""
-!!! hint "Resolução"
-	Utilizando a definição, temos:
-
-	$$\begin{eqnarray}f'(x) &=& \lim_{h\to 0}\frac{f(x + h) - f(x)}{h} \\ &=& \lim_{h\to 0}\frac{\sqrt{x + h} - \sqrt{x}}{h} \\ &=& \lim_{h\to 0}\left(\frac{\sqrt{x + h} - \sqrt{x}}{h} \cdot\frac{\sqrt{x + h} + \sqrt{x}}{\sqrt{x + h} + \sqrt{x}} \right) \\ &=& \lim_{h\to 0}\frac{h}{h(\sqrt{x + h} + \sqrt{x})} \\ &=& \lim_{h\to 0}\frac{1}{\sqrt{x + h} + \sqrt{x}} = \frac{1}{2\sqrt{x}}\end{eqnarray}$$
-
-	Domínio das funções:
-
-	$$\begin{eqnarray} Dom(f) &=& [0, \infty) \\ Dom(f') &=& (0, \infty)\end{eqnarray}$$
-"""
-
-# ╔═╡ 0d37e5ce-0c54-4bb6-aee3-132a4f6e0bb8
-begin
-	plot(x-> √x, 0, 10, lc=:indianred, label=L"f(x) = \sqrt{x}")
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)	
-end
-
-# ╔═╡ 72cb789a-6ba2-476c-8980-075f93e4ca51
-begin
-	plot(x-> 1/(2√x), 0.2, 10, lc=:indianred, label=L"f'(x) = \frac{1}{2\sqrt{x}}")
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)	
-end
-
-# ╔═╡ 0a89831a-6f00-4bd2-acd6-4bd6093b782b
-md"""
-!!! info "Notações"
-	Seja $y = f(x)$, temos as seguintes notações alternativas para a função derivada:
-
-	$$f'(x) = y' = \frac{dy}{dx} = \frac{df}{dx} = \frac{d}{dx}f(x) = Df(x) = D_xf(x)$$
-
-	Os símbolos $D$ e $d/dx$ são chamados **operadores diferenciais** (indicam a operação de diferenciação)
-
-	A notação de Leibniz para a derivada de uma função avaliada em um ponto $a$ pode ser denotada por:
-
-	$$\left.\frac{dy}{dx}\right|_{x = a} \qquad \text{ ou } \qquad \left.\frac{dy}{dx}\right]_{x = a}$$,
-
-	que são equivalentes à notação que vimos anteriormente $f'(a)$
-"""
-
-# ╔═╡ 8a834c18-73ed-4459-a940-965e9902d376
-md"""
-!!! correct "Definição 5.4 - Função diferenciável"
-	Uma função $f$ é derivável ou **diferenciável em $a$** se $f'(a)$ existir.
-
-	A função $f$ é derivável ou **diferenciável em um intervalo aberto $(a,b)$** se for diferenciável em todos os números do intervalo
-
-	O intervalo aberto determinado acima pode ser: $(a, \infty), (-\infty, a) \text{ ou } (-\infty, \infty)$
-"""
-
-# ╔═╡ 5cc706b3-4fdb-4c1b-aac5-63a58f8bd777
-begin
-	plot(x-> abs(x), -5, 5, lc=:indianred, label=L"f(x) = |x|")
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)	
-end
-
-# ╔═╡ 04043bc4-f3a1-469f-97eb-971745f1fb9b
-begin
-	plot(x-> -1, -5, 0, lc=:indianred, label=L"f'(x)")
-	plot!(x-> 1, 0, 5, lc=:indianred, label=:none)
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)
-	scatter!([(0, -1), (0,1)], label=:none, ms=7, mc=:white, msc=:indianred, msw = 1)
-end
-
-# ╔═╡ 60e5f05b-f983-47a3-a3eb-80a553abd895
-md"""
-!!! info "Teorema 5.1"
-	Se $f$ for uma função diferenciável em $a$, então, $f$ é uma função contínua em $a$
-"""
-
-# ╔═╡ c2047dc8-1b81-4c46-8c00-87818b48b522
-md"""
-!!! danger ""
-	⚠️ A recíproca do Teorema 5.1 não é verdadeira!
-	
-	Existem funções que são contínuas, mas não são diferenciáveis. Por exemplo, $f(x) = |x|$ é contínua em $x = 0$, mas não é diferenciável
-"""
-
-# ╔═╡ 398c1179-d86f-44b5-b6ed-05603ef58284
-md"""
-!!! warning "Funções não diferenciáveis"
-	Nas seguintes situações, a função $f$ não será diferenciável no ponto $a$:
-
-	1. Existência de uma "quinta" em $a$
-	2. Descontinuidade da função em $a$
-	3. Existência de uma reta tangente vertical em $x = a$
-
-	No terceiro caso, a função é contínua em $a$ e, além disso, temos:
-
-	$$\lim_{x\to a} |f'(x)| = \infty$$
-"""
-
 # ╔═╡ 28ce946c-bdf4-449d-837b-397dea53b010
 md"
 ## 📚 Bibliografia
@@ -626,7 +454,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.5"
 manifest_format = "2.0"
-project_hash = "e9be83a6c7fd21f04cfc4051871fb477d5cc6cf9"
+project_hash = "378f739220c3378e596c6ed6d9090ffcfe2c72b8"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -680,10 +508,10 @@ uuid = "944b1d66-785c-5afd-91f1-9de20f533193"
 version = "0.7.1"
 
 [[deps.ColorSchemes]]
-deps = ["ColorTypes", "ColorVectorSpace", "Colors", "FixedPointNumbers", "PrecompileTools", "Random"]
-git-tree-sha1 = "be6ab11021cd29f0344d5c4357b163af05a48cba"
+deps = ["ColorTypes", "ColorVectorSpace", "Colors", "FixedPointNumbers", "Random", "SnoopPrecompile"]
+git-tree-sha1 = "aa3edc8f8dea6cbfa176ee12f7c2fc82f0608ed3"
 uuid = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
-version = "3.21.0"
+version = "3.20.0"
 
 [[deps.ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
@@ -808,15 +636,15 @@ version = "3.3.8+0"
 
 [[deps.GR]]
 deps = ["Artifacts", "Base64", "DelimitedFiles", "Downloads", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Pkg", "Preferences", "Printf", "Random", "Serialization", "Sockets", "TOML", "Tar", "Test", "UUIDs", "p7zip_jll"]
-git-tree-sha1 = "db730189e3d250d97515a91886de7e33aa8833e6"
+git-tree-sha1 = "011a22022ed2fb0352a9bded0fa9d3793a8db362"
 uuid = "28b8d3ca-fb5f-59d9-8090-bfdbd6d07a71"
-version = "0.72.2"
+version = "0.72.1"
 
 [[deps.GR_jll]]
 deps = ["Artifacts", "Bzip2_jll", "Cairo_jll", "FFMPEG_jll", "Fontconfig_jll", "GLFW_jll", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Libtiff_jll", "Pixman_jll", "Qt5Base_jll", "Zlib_jll", "libpng_jll"]
-git-tree-sha1 = "47a2efe07729dd508a032e2f56c46c517481052a"
+git-tree-sha1 = "7ea8ead860c85b27e83d198ea54bb2f387db9fc3"
 uuid = "d2c73de3-f751-5644-a686-071e5b155ba9"
-version = "0.72.2+0"
+version = "0.72.1+1"
 
 [[deps.Gettext_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Libiconv_jll", "Pkg", "XML2_jll"]
@@ -940,9 +768,9 @@ version = "1.3.0"
 
 [[deps.Latexify]]
 deps = ["Formatting", "InteractiveUtils", "LaTeXStrings", "MacroTools", "Markdown", "OrderedCollections", "Printf", "Requires"]
-git-tree-sha1 = "98dc144f1e0b299d49e8d23e56ad68d3e4f340a5"
+git-tree-sha1 = "2422f47b34d4b127720a18f86fa7b1aa2e141f29"
 uuid = "23fbe1c1-3f47-55db-b15f-69d7ec21a316"
-version = "0.15.20"
+version = "0.15.18"
 
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
@@ -1166,10 +994,10 @@ uuid = "ccf2f8ad-2431-5c83-bf29-c5338b663b6a"
 version = "3.1.0"
 
 [[deps.PlotUtils]]
-deps = ["ColorSchemes", "Colors", "Dates", "PrecompileTools", "Printf", "Random", "Reexport", "Statistics"]
-git-tree-sha1 = "f92e1315dadf8c46561fb9396e525f7200cdc227"
+deps = ["ColorSchemes", "Colors", "Dates", "Printf", "Random", "Reexport", "SnoopPrecompile", "Statistics"]
+git-tree-sha1 = "c95373e73290cf50a8a22c3375e4625ded5c5280"
 uuid = "995b91a9-d308-5afd-9ec6-746e21dbc043"
-version = "1.3.5"
+version = "1.3.4"
 
 [[deps.Plots]]
 deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "JLFzf", "JSON", "LaTeXStrings", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "Pkg", "PlotThemes", "PlotUtils", "Preferences", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "RelocatableFolders", "Requires", "Scratch", "Showoff", "SnoopPrecompile", "SparseArrays", "Statistics", "StatsBase", "UUIDs", "UnicodeFun", "Unzip"]
@@ -1182,12 +1010,6 @@ deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "FixedPointNu
 git-tree-sha1 = "5bb5129fdd62a2bbbe17c2756932259acf467386"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 version = "0.7.50"
-
-[[deps.PrecompileTools]]
-deps = ["Preferences"]
-git-tree-sha1 = "bc2bda41d798c2e66e7c44a11007bb329b15941b"
-uuid = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
-version = "1.0.1"
 
 [[deps.Preferences]]
 deps = ["TOML"]
@@ -1599,8 +1421,6 @@ version = "1.4.1+0"
 # ╟─0e079409-7677-4d24-8e87-88b6b69fce49
 # ╟─ebf7ef94-34b2-4386-b802-769d9992362b
 # ╟─6a8c1d2c-8d8f-4ce1-921c-f97c66a3ddf9
-# ╟─18d64874-c6b1-4b17-9ead-2fc6978c8cea
-# ╟─9c759fdf-a018-44f8-8aac-3247eb549c2d
 # ╟─ddd2aff4-1a08-47f7-9258-fe8a06aeb95c
 # ╟─d8305f01-f116-4170-9edb-3068631d3074
 # ╟─3cf205a4-0e27-4b77-90df-e29f92ce12e4
@@ -1637,25 +1457,6 @@ version = "1.4.1+0"
 # ╟─e8ab016c-c16d-4c1f-92ab-b4d41baf3c1b
 # ╟─295c31de-c476-4a0f-aa25-63be4290c513
 # ╟─32c27614-f86b-43c1-a3cf-216502f7bec0
-# ╟─fb081184-d184-4dae-9da8-9d20432665a6
-# ╟─56379eb0-6e59-4316-a088-51e143302f51
-# ╟─041aacd0-65ca-4925-a99e-d64ad12b67d5
-# ╟─49eea7dd-89c7-4868-ae6b-70d7c31efadd
-# ╟─27fff356-420a-4769-b846-d79eee9b5c7b
-# ╟─4e5d90a6-f2b4-402a-8df1-e91a10440c0a
-# ╟─3214cb20-acc0-4c4c-bc85-288a6350c568
-# ╟─a4f4dc3b-788b-4d04-a81b-3c2a4ed32b02
-# ╟─f08cb7c4-582b-47ce-bebe-b51faafa0b88
-# ╟─42461d4b-8314-4860-bb7d-23c41e61568a
-# ╟─0d37e5ce-0c54-4bb6-aee3-132a4f6e0bb8
-# ╟─72cb789a-6ba2-476c-8980-075f93e4ca51
-# ╟─0a89831a-6f00-4bd2-acd6-4bd6093b782b
-# ╟─8a834c18-73ed-4459-a940-965e9902d376
-# ╟─5cc706b3-4fdb-4c1b-aac5-63a58f8bd777
-# ╟─04043bc4-f3a1-469f-97eb-971745f1fb9b
-# ╟─60e5f05b-f983-47a3-a3eb-80a553abd895
-# ╟─c2047dc8-1b81-4c46-8c00-87818b48b522
-# ╠═398c1179-d86f-44b5-b6ed-05603ef58284
 # ╟─28ce946c-bdf4-449d-837b-397dea53b010
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
