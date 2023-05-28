@@ -14,7 +14,7 @@ macro bind(def, element)
     end
 end
 
-# ╔═╡ 9341d680-e167-11ed-1b6f-2b0f0911012e
+# ╔═╡ 3949d830-fd82-11ed-222b-4906774e18de
 begin
 	using PlutoUI
 	using Plots
@@ -25,637 +25,805 @@ begin
 	gr(size=(800,600), lw = 2, fontfamily = "Computer Modern", grid=true, tickfontsize = 12, guidefontsize=16, framestyle=:box, margin=3mm, right_margin=7mm, guidefonthalign=:right, guidefontvalign=:top)	
 end
 
-# ╔═╡ 881fbecd-dd85-40f8-8758-eb058f8010db
+# ╔═╡ 628e11b8-8e29-4234-8bad-a56c2cc3e36a
 PlutoUI.TableOfContents(title="Sumário", indent=true)
 
-# ╔═╡ 95cf31a2-4ce5-4e41-80ca-fa2b5f2d2b00
+# ╔═╡ 5ffd7e9e-240a-4d65-a880-6d61bfc7d30a
 html"<button onclick=present()>Apresentação</button>"
 
-# ╔═╡ 0e079409-7677-4d24-8e87-88b6b69fce49
+# ╔═╡ a7739997-4e40-47b7-8eac-eaef3b3ece05
 md"""
-# Derivadas e taxas de variação  $(Resource("https://www1.udesc.br/imagens/id_submenu/899/cor_horizontal_rgb.jpg", :width => 150))
+# Regras de derivação e aplicações de derivadas $~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~$  $(Resource("https://www1.udesc.br/imagens/id_submenu/899/cor_horizontal_rgb.jpg", :width => 150))
 """
 
-# ╔═╡ ebf7ef94-34b2-4386-b802-769d9992362b
+# ╔═╡ 0629c3de-2570-42a5-9ba3-e312cfaf2c60
 md"
 * **Disciplina:** 11MTMAP - Matemática Aplicada
 * **Docente:** [Paulo Victor da Fonseca](https://pvfonseca.github.io)
 * **Contato:** [paulo.fonseca@udesc.br](mailto:paulo.fonseca@udesc.br)
 "
 
-# ╔═╡ 6a8c1d2c-8d8f-4ce1-921c-f97c66a3ddf9
+# ╔═╡ 49944de8-467a-4df3-9d7a-2222b29d044d
 md"""
 !!! danger "Aviso"
 	O texto que segue não tem a menor pretensão de originalidade. Ele serve apenas como registro dos principais princípios, conceitos e técnicas analíticas que são trabalhados em sala de aula.	
 
-	▶️ **Leitura obrigatória**: Stewart, Clegg, Watson (2022) - [Cálculo: volume I](https://app.minhabiblioteca.com.br/reader/books/9786555584097): Seções 2.7 e 2.8
+	▶️ **Leitura obrigatória**: Stewart, Clegg, Watson (2022) - [Cálculo: volume I](https://app.minhabiblioteca.com.br/reader/books/9786555584097):
+	* Capítulo 3
+	* Capítulo 4
 """
 
-# ╔═╡ 18d64874-c6b1-4b17-9ead-2fc6978c8cea
-md"""
-$(Resource("https://upload.wikimedia.org/wikipedia/commons/6/65/Charles_Hermite_circa_1887.jpg", width=>300))
-"""
-
-# ╔═╡ 9c759fdf-a018-44f8-8aac-3247eb549c2d
-md"""
-!!! info ""
-	"I turn away with fright and horror from the lamentable evil of functions which do not have derivatives."
-
-	[Charles Hermite](https://en.wikipedia.org/wiki/Charles_Hermite) (1822 - 1901) - matemático francês
-"""
-
-# ╔═╡ ddd2aff4-1a08-47f7-9258-fe8a06aeb95c
+# ╔═╡ 981a4689-e607-4da9-ae21-c94fb73d8685
 md"
-## Tangentes
+## Regras de derivação
 "
 
-# ╔═╡ d8305f01-f116-4170-9edb-3068631d3074
+# ╔═╡ 7b496d13-a214-48c5-8954-1a8ae1e7f6d4
 md"
-* Agora que definimos limites e vimos como calculá-los, podemos voltar ao problema introduzido na primeira aula do nosso curso
-* A saber, como obter a reta tangente a uma curva $y = f(x)$ em um ponto $P$
-* Vimos que neste caso, para obter a reta tangente a uma curva em um ponto $P$, podemos traçar uma reta secante $PQ$ e fazer $Q$ aproximar-se de $P$ ao longo da curva da função, fazendo $x$ tender a $a$
-* Especificamente, se uma curva $C$ tiver uma equação $y = f(x)$ e nosso objetivo é encontrar a reta tangente a $C$ no ponto $P(a, f(a))$, tomamos um ponto $Q(x, f(x))$ que seja próximo de $P$, com $x \neq a$, e calculamos a inclinação da reta secante $PQ$:
-
-$$m_{PQ} = \frac{f(x) - f(a)}{x - a}$$
-
-* Depois, fazemos $Q$ aproximar-se do ponto $P$ ao longo da curva $C$, fazendo $x$ tender a $a$
-* Se $m_{PQ}$ tender a um número $m$, definimos a **tangente $l$** como a reta que passa por $P$ e tem inclinação $m$
+| Primitiva | Derivada |
+| :--- | ---: |
+| $f(x) = c$ | $f'(x) = 0$ |
+| $f(x) = x^n$ | $f'(x) = nx^{n-1}$ |
+| $(f \pm g)(x)$ | $(f \pm g)'(x) = f'(x) \pm g'(x)$ |
+| $(f \cdot g)(x)$ | $(f \cdot g)'(x) = f'(x) \cdot g(x) + f(x) \cdot g'(x)$ |
+| $(\frac{f}{g})(x)$ | $(\frac{f}{g})'(x) = \frac{f'(x) \cdot g(x) - f(x) \cdot g'(x)}{g(x)^2}$ |
+| $(f\circ g)(x)$ | $(f\circ g)'(x) = f'(g(x)) \cdot g'(x)$ |
+| $f(x) = e^x$ | $f'(x) = e^x$ |
+| $f(x) = a^x$ | $f'(x) = a^x \ln a$ |
+| $f(x) = \ln x$ | $f'(x) = \frac{1}{x}$ |
 "
 
-# ╔═╡ 3cf205a4-0e27-4b77-90df-e29f92ce12e4
+# ╔═╡ ffa8b20f-1f57-4d69-a605-3db9dbc2a1a4
+md"
+* A derivada de uma derivada é chamada de segunda derivada (ou derivada de segunda ordem) é denotada por $f''(x)$
+"
+
+# ╔═╡ 11a96a89-6fbe-4cf7-96be-966a5141f2ae
+md"""
+!!! warning "Exercícios"
+	* Encontre as derivadas das seguintes funções:
+	    *  $f(x) = (2 - x^2)^3$
+	    *  $f(x) = (x^3 + x^2)^{50}$
+	    *  $f(x) = \sqrt{x^2 + 1}$
+	    *  $f(x) = \frac{3x-5}{x-2}$
+	* Encontre a primeira e segunda derivadas das seguintes funções:
+	    *  $f(x) = x^3 + e^x$
+	    *  $f(x) = \frac{e^x}{x}$
+	    *  $f(x) = x^2\ln x$
+"""
+
+# ╔═╡ 7e09331f-1eb6-46be-980e-8003ec38711b
+md"""
+!!! correct "Definição (Diferencial)"
+	Seja $y = f(x)$ uma função contínua e diferenciável, denote uma variação arbitrária na variável $x$ por $dx$.
+
+	Neste caso, a expressão $f'(x)dx$ é chamada o **diferencial** de $y = f(x)$ e é denotada por $dy$, de modo que:
+
+	$$dy = f'(x)dx$$
+
+	Ou seja, $dy$ é proporcional a $dx$, com $f'(x)$ como o fator de proporcionalidade.
+"""
+
+# ╔═╡ fdfb28f3-ed02-4639-be0e-6ac9a95f6278
+md"
+## Aplicações de derivação
+"
+
+# ╔═╡ 1509d7c9-7529-4ac1-a250-b96a692c9614
+md"
+### Máximos e mínimos de funções univariadas
+"
+
+# ╔═╡ ca01814a-19b6-43dc-aeff-5a49f4c6597d
+md"""
+!!! info "Definição. (Máximos e mínimos absolutos)"
+	Seja $f$ uma função e $A$ um conjunto de números contido no domínio de $f$.
+
+	Um ponto $x$ em $A$ é:
+	* um valor **máximo absoluto** de $f$ em $A$ se $f(x) \geq f(y)$ para todo $y \in A$.
+	* um valor **mínimo absoluto** de $f$ em $A$ se $f(x) \leq f(y)$ para todo $y \in A$.
+"""
+
+# ╔═╡ 437a7bf7-e7f2-47f5-bb3c-4d28a18451b9
+md"
+* Um máximo ou mínimo absoluto, às vezes, é chamado de máximo ou mínimo **global**.
+* Os valores máximos e mínimos de $f$ são chamados de **valores extremos** de $f$.
+"
+
+# ╔═╡ b3267b35-11d2-46e5-8972-f58281290c8b
 begin
-	h_sec = @bind h Slider(range(2, 3.5, 100), default = 3.5)
-	md"""
-	Ponto sobre a reta secante: 
+	plot(range(0, 6.5, 50), x -> 2sin(x) + 3, label=L"f(x) = 2sen(x) + 3", lc=:indianred)
+	xlims!(0, 7)
+	ylims!(0, 6)
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	scatter!([(π/2, 5), (3π/2, 1)], ms=6, label=:none, mc=:black)
+end
+
+# ╔═╡ 72af4ebb-c629-49d1-bfcc-d0d9de07e0fa
+md"
+> A figura acima mostra o gráfico de uma função com um máximo absoluto em $(π/2, 5)$ e um mínimo absoluto em $(3π/2, 1)$.
+"
+
+# ╔═╡ 075b508e-c88e-41ea-81ef-2bb7d5a4950d
+begin
+	f(x) = 3x^4 - 16x^3 + 18x^2
+	plot(range(0, 4, 50), x -> f(x), label=L"f(x) = 3x^4-16x^3+18x^2", lc=:indianred)
+	xlims!(0, 4)
+	ylims!(-50, 50)
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	scatter!([(1, f(1)), (3, f(3)), (4, f(4))], ms=6, label=:none, mc=[:darkviolet, :black, :black])
+end
+
+# ╔═╡ a7615954-e770-4b6f-80c3-da3882878717
+md"""
+> Note, na figura acima, o gráfico de uma função $f$ que tem um máximo absoluto em $(4, 32)$ e mínimo absoluto em $(3, -27)$.
+>
+> Note, ainda, que se considerarmos apenas os valores de $x$ próximos (na vizinhança) de $x = 1$, então, $x = 1$ é o maior destes valores de $f(x)$ e é chamado de **valor de máximo local** de $f$.
+"""
+
+# ╔═╡ 53143d4b-c0c0-4a46-8afc-75515582b42c
+md"""
+!!! info "Definição 3.2. (Máximos e mínimos locais)"
+	Seja $f$ uma função, e $A$ um conjunto de números contido no domínio de $f$.
+
+	Um ponto $x \in A$ é:
+	* um **ponto de máximo local** de $f$ em $A$ se existe algum $\delta > 0$ tal que $x$ é um ponto de máximo de $f$ em $A \cap (x - \delta, x + \delta)$.
+	* um **ponto de mínimo local** de $f$ em $A$ se existe algum $\delta > 0$ tal que $x$ é um ponto de mínimo de $f$ em $A \cap (x - \delta, x + \delta)$.
+"""
+
+# ╔═╡ cba1a083-8bc9-48d0-b79f-8e9159b8fa14
+md"""
+Exemplo de mínimos/máximos locais e globais
+$(Resource("https://raw.githubusercontent.com/pvfonseca/MetodosQuantitativos/main/notas/figures/aula3_fig1.PNG", :width=> 600))
+"""
+
+# ╔═╡ da3eb8c3-992d-470b-aa4f-510e58d51a6e
+md"
+#### Exemplos
+"
+
+# ╔═╡ 325c1802-9dbd-4572-92d7-b1bf21ad1d34
+md"""
+$$f(x) = 3x^4 - 16x^3 + 18x^2, \qquad -1 \leq x \leq 4$$
+"""
+
+# ╔═╡ 1bf2d305-1943-485b-abb1-29c8869cd075
+begin	
+	plot(range(-1, 4, 50), x -> f(x), label=L"f(x) = 3x^4-16x^3+18x^2", lc=:indianred)
+	xlims!(-2, 5)
+	ylims!(-50, 50)
+	xticks!(-2:1:5)
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	scatter!([(-1, f(-1)), (0, f(0)), (1, f(1)), (3, f(3)), (4, f(4))], ms=6, label=:none, mc=:black)
+end
+
+# ╔═╡ 34fd9dfb-7f29-4d60-b3a5-169a39c5a5eb
+md"
+| Ponto | Classificação |
+| :--- | ---: |
+| $f(1) = 5$ | Máximo local |
+| $f(-1) = 37$ | Máximo absoluto |
+| $f(0) = 0$ | Mínimo local |
+| $f(3) = -27$ | Mínimo local e absoluto |
+
+
+* Note que $f(-1) = 37$ é um máximo absoluto mas **não** é um máximo local, pois ocorre em um extremo do intervalo
+* Note que $f(4) = 32$ não é máximo local nem global
+"
+
+# ╔═╡ 2a16c10a-5a0e-4147-a6fa-3ac7fa0ccb2d
+md"""
+---
+$$f(x) = \cos(x)$$
+"""
+
+# ╔═╡ 7b469342-1626-41ce-96d7-5b7744cb38af
+begin	
+	g(x) = cos(x)
+	plot(range(-3π/4, 7π/2, 100), x -> g(x), label=L"f(x) = \cos(x)", lc=:indianred)
+	xticks!([-π, 0, π, 2π, 3π], ["-π", "0", "π", "2π", "3π"])
+	xlims!(-3, 12)
+	ylims!(-2,2)
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	scatter!([(0, g(0)), (π, g(π)), (2π, g(2π)), (3π, g(3π))], ms=6, label=:none, mc=:black)
+end
+
+# ╔═╡ cd5ae57b-64d1-48bf-8af7-fc08e9fcc571
+md"
+* A função $f(x) = \cos(x)$ assume seu valor máximo (local e absoluto) 1 infinitas vezes, uma vez que $\cos 2nπ = 1$ para todo inteiro $n$ e $-1\leq \cos x\leq 1$ para todo $x$.
+* Da mesma forma, $\cos (2n + 1)π = -1$ é seu valor mínimo, onde $n \in \mathbb{Z}$.
+"
+
+# ╔═╡ 44f44f43-76b7-4f75-a133-154f14fcd7f3
+md"
+---
+$$f(x) = x^2$$
+"
+
+# ╔═╡ a312b8d9-db95-4e59-a785-9372d9e19523
+begin
+	plot(range(-4, 4, 50), x->x^2, label=L"f(x) = x^2", lc=:indianred)
+	xlims!(-5, 5)
+	ylims!(-1, 20)
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	scatter!([(0, 0)], ms=6, label=:none, mc=:black)
+end
+
+# ╔═╡ 8147c316-b90b-4c73-9a55-c7e8090ca058
+md"
+* Se $f(x) = x^2$, então, $f(x) \geq f(0)$ para todo $x$.
+* Consequentemente, $f(0) = 0$ é o valor mínimo absoluto (e local) de $f$.
+* Porém, não há um ponto mais alto sobre a parábola e, portanto, a função não tem um valor máximo.
+"
+
+# ╔═╡ 22da3e17-40e7-40d0-bc36-45e8e202f922
+md"
+---
+$$f(x) = x^3$$
+"
+
+# ╔═╡ 1a935c85-cdf8-4652-87f2-ed968860557b
+begin
+	plot(range(-2, 2, 50), x->x^3, label=L"f(x) = x^3", lc=:indianred)
+	xlims!(-3, 3)
+	ylims!(-10, 10)
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)	
+end
+
+# ╔═╡ 627ed056-0a3c-4d04-899b-df20f857d543
+md"
+* Essa função não tem um valor máximo absoluto, nem um valor mínimo absoluto.
+* De fato, ela também não tem nenhum valor extremo local.
+"
+
+# ╔═╡ 19362b71-dc0f-4531-82d8-0c16f02eec5b
+md"""
+---
+### Ótimos irrestritos
+"""
+
+# ╔═╡ 28bf267e-e157-4995-8b5a-5ac364352721
+md"
+* Passamos, agora, para o estudo da teoria da otimização sob as hipóteses de diferenciabilidade.
+* Nosso principal objetivo é identificar as **condições _necessárias_** que a derivada da função $f$ deve satisfazer em um ponto de ótimo.
+* Começaremos nossa análise analisando o que ficou conhecido por **otimização irrestrita**.
+"
+
+# ╔═╡ 481791b2-98dd-444a-8c1e-9d7f9b090a9b
+md"""
+$(Resource("https://upload.wikimedia.org/wikipedia/commons/f/f3/Pierre_de_Fermat.jpg", :width=>300))
+
+[Pierre de Fermat (1601-1665) - Magistrado francês](https://pt.wikipedia.org/wiki/Pierre_de_Fermat)
+"""
+
+# ╔═╡ 6eb31322-81e6-4eb4-9607-e46a5a79f634
+md"""
+!!! correct "Teorema de Fermat (Condição necessária de primeira ordem)"
+	Se $f$ é definida no intervalo aberto $(a,b)$ e tiver um máximo ou mínimo local em $x$ e, além disso, $f$ for diferenciável em $x$, então, $f'(x) = 0$.
+
+	---
+	▶️ Demonstração
+
+	Ver Stewart et al. - Cálculo, Vol. 1 (2022) - pp. 258-259 🔳
+"""
+
+# ╔═╡ 64caaf9e-2512-4293-b0b7-6bc1a473413b
+md"
+* Portanto, dada uma função $y = f(x)$, a derivada primeira $f'(x)$ desempenha um papel importante na identificação de seus pontos ótimos.
+* Isso porque, se um extremo relativo da função acontecer em um ponto $x$, ou (i) $f'(x)$ não existe, ou (ii) $f'(x) = 0$.
+"
+
+# ╔═╡ 7d053bac-33b3-4804-83eb-25c9b886823b
+md"""
+!!! danger "Teorema de Fermat - Observações"
+	⚠️ A recíproca do Teorema de Fermat **não é verdadeira**❗❗❗
+	* É possível que $f'(x) = 0$ e, ainda assim, $x$ não ser um ponto de mínimo ou de máximo para $f$.
+	* Além disso, pode existir um valor extremo mesmo quando $f'(x)$ não existir.
+"""
+
+# ╔═╡ 4100e93b-2817-4614-b055-b6286b765712
+begin
+	plot(range(-3, 3, 50), x->x^3, lc=:indianred, label=L"f(x) = x^3")	
+	xlims!(-4, 4)
+	ylims!(-30, 30)
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)		
+	scatter!([(0, 0)], label=:none, m = (6, :indianred, stroke(1, :indianred)))
+	annotate!([(0.7, -2, text(L"f'(0) = 0", :indianred))])
+	annotate!([(0.1, -6, text("⚠️ não é máximo nem mínimo", :darkyellow, :left))])
+end
+
+# ╔═╡ b0347db2-5cde-4441-b7ff-730cd3ed7eb4
+md"
+---
+Para a função $f(x) = |x|$, $f(0) = 0$ é um valor mínimo, mas $f'(0)$ não existe.
+"
+
+# ╔═╡ f51f2119-0106-4cf6-acdc-8b37eeb4371d
+begin
+	plot(x->abs(x), lc=:indianred, label=L"f(x) = |x|")	
+	xlims!(-3, 3)
+	ylims!(0, 4)
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)		
+	scatter!([(0, 0)], label=:none, m = (6, :indianred, stroke(1, :indianred)))		
+end
+
+# ╔═╡ 404f1960-b273-454f-be5a-511bfbe08b8e
+md"
+* Um dos equívocos mais comuns em cálculo têm a ver com o comportamento de uma função $f$ em uma vizinhança de $x$ quando $f'(x) = 0$.
+* O ponto feito anteriormente é fundamental: **a recíproca do Teorema de Fermat não é verdadeira**!
+* ⚠️ A condição $f'(x) = 0$ **não** implica que $x$ é um ponto de mínimo ou máximo local de $f$.
+* Precisamente por este motivo, uma terminologia especial foi adotada para descrever números $x$ que satisfazem a condição $f'(x) = 0$.
+"
+
+# ╔═╡ 5bbb4bde-73fb-49e9-851c-b302862e08e4
+md"""
+!!! info "Definição (Ponto crítico)"
+	Um **ponto crítico** de uma função $f$ é um número $x$ que satisfaz
 	
-	h = $(h_sec)
+	$$f'(x) = 0,$$
+
+	ou se $f'(x)$ não existe.
+
+	O valor $f(x)$ é denominado **valor crítico** de $f$.
+"""
+
+# ╔═╡ 584a2f6e-a257-411e-b975-10f3262b1dc1
+md"""
+> **Exercício**. Encontre os pontos críticos das seguintes funções:
+>
+> (a) $f(x) = x^3 - 3x^2 + 1.$
+>
+> (b) $f(x) = x^{3/5}(4 - x).$
+"""
+
+# ╔═╡ fc3765a7-3652-4121-8600-e6981c858b8b
+md"""
+!!! hint "Respostas"
+	(a) Note que $f'(x)$ está definida para todo valor de $x$. Portanto, os pontos críticos são $x = 0$ e $x = 2$.
+
+	(b) Quando $f'(x) = 0$, temos $x = \frac{3}{2}$. Além disso, $f'(x)$ não existe quando $x = 0$. Assim, os pontos críticos são $x = \frac{3}{2}$ e $x = 0$.
+"""
+
+# ╔═╡ c43dd456-ac36-4915-880c-1df7f7f6b8f8
+md"""
+!!! info "Definição (Funções crescentes e funções decrescentes)"
+	Uma função $f$ é **crescente** em um intervalo $I$ se
+
+	$$f(x_1) < f(x_2), \quad \text{quando } x_1 < x_2 \text{ em } I$$
+
+	Uma função $f$ é **decrescente** em um intervalo $I$ se
+
+	$$f(x_1) > f(x_2), \quad \text{quando } x_1 < x_2 \text{ em } I$$
+
+"""
+
+# ╔═╡ 5e405354-96c3-4f3e-932d-5aecbd90e816
+begin
+	plot(range(0, 2π, 50), x->x + 2sin(x), lc=:indianred, label=L"f(x) = x + 2sen(x)")
+	xlims!(0, 2π)
+	ylims!(0, 7)
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)		
+	scatter!([(2π/3, 2π/3 + 2sin(2π/3)), (4π/3, 4π/3 + 2sin(4π/3)), (2π, 2π + 2sin(2π))], label=:none, m = (6, :indianred, stroke(1, :indianred)))
+	xticks!([0, 2π/3, 4π/3, 2π], [L"0", L"\frac{2π}{3}", L"\frac{4π}{3}", L"2π"])
+end
+
+# ╔═╡ 9e3ab534-851a-48c5-ba55-5103d1bef262
+md"""
+!!! correct "Corolário"
+	Se $f'(x) > 0$ para qualquer valor de $x$ em um intervalo, então, $f$ é uma função crescente neste intervalo.
+
+	Se $f'(x) < 0$ para qualquer valor de $x$ em um intervalo, então, $f$ é uma função decrescente neste intervalo.
+
+	---
+	▶️ Demonstração (na lousa)
+
+	Ver Stewart et al. - Cálculo, Vol. 1 (2022) - pp. 272 🔳
+"""
+
+# ╔═╡ d221ee4a-bffa-45ea-9245-a54a92fb7d46
+md"""
+> **Exercício**.
+>
+> Encontre onde a função $f(x) = 3x^4 - 4x^3 - 12x^2 + 5$ é crescente e onde é decrescente.
+"""
+
+# ╔═╡ 5b33c0ac-ee07-41ae-b24d-f54137491da6
+md"""
+> O Corolário acima nos dá informações importantes para termos uma boa ideia a respeito do gráfico de uma função.
+>
+> Perceba este fato ao tentar fazer um esboço da função do exercício anterior utilizando suas respostas.
+"""
+
+# ╔═╡ 4996743b-f981-4210-a02c-b76471cfcc41
+begin
+	func(x) = 3*x^4-4*x^3-12*x^2 + 5
+	plot(range(-2, 3, 50), x->func(x), lc=:indianred, label=L"f(x) = 3x^4 - 4x^3 - 12x^2 + 5")
+	xlims!(-2, 3)
+	#ylims!(0, 7)
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)		
+	scatter!([(-1, func(-1)), (0, func(0)), (2, func(2))], label=:none, m = (6, :indianred, stroke(1, :indianred)))	
+end
+
+# ╔═╡ 4529c42e-feb4-4ce5-9e6e-41274f892ece
+md"""
+!!! warning "Observação"
+	Note que a recíproca do Corolário **não é verdadeira**.
+
+	Se $f$ é crescente, é fácil ver que $f'(x) \geq 0$ para qualquer valor de $x$, no entanto, o sinal de igualdade pode ser válido para algum valor de $x$ (considere, por exemplo, $f(x) = x^3$).
+"""
+
+# ╔═╡ 74c68a75-a890-48bc-a35d-649ffadcdce8
+md"""
+---
+### Teste da primeira derivada
+"""
+
+# ╔═╡ 0b1ee673-16f2-4b29-a9e1-7c376572187e
+md"
+* Toda a discussão que acabamos de fazer nos fornece um esquema geral para decidir se um ponto crítico é um ponto de máximo local, um ponto de mínimo local, ou nenhum desses casos
+"
+
+# ╔═╡ 626a5700-e192-4e26-8e07-68a2ba3ee3a2
+md"""
+!!! correct "Teste da Primeira Derivada"
+	Seja $x$ um ponto crítico de uma função contínua $f$:
+
+	(1) Se $f' > 0$ em algum intervalo à esquerda de $x$ e $f' < 0$ em algum intervalo à direita de $x$, então, $x$ é um ponto de máximo local.
+
+	(2) Se $f' < 0$ em algum intervalo à esquerda de $x$ e $f' > 0$ em algum intervalo à direita de $x$, então, $x$ é um ponto de mínimo local.
+
+	(3) Se $f'$ tem o mesmo sinal em algum intervalo à esquerda de $x$ que possui em algum intervalo à direita, então, $x$ não é nem um ponto de máximo local nem um ponto de mínimo local.
+"""
+
+# ╔═╡ ebb6aba4-57ee-4425-b2b5-4e8c6ead314c
+PlutoUI.Resource("https://raw.githubusercontent.com/pvfonseca/MetodosQuantitativos/main/notas/figures/aula3_fig6.PNG", :width=>800)
+
+# ╔═╡ 6bec7bf9-c557-4bc7-b6fe-1e5b261b8a30
+md"""
+> **Exercícios**. Encontre os pontos de mínimo relativo ou de máximo relativo para as seguintes funções:
+>
+> (a) $f(x) = x^3 - 12x^2 + 36x + 8$
+>
+> (b) $f(x) = -2x^2 + 8x + 7$
+>
+> (c) $f(x) = 3 - (x - 2)^2$
+>
+> (d) $f(x) = \frac{8}{3x^2 + 4}$
+>
+> (e) $f(x) = x^3 - 1$
+"""
+
+# ╔═╡ 601c9556-20d1-4e3c-8056-6bcd29a68add
+begin	
+	plot(range(-1, 8, 50), x->x^3 - 12x^2 + 36x + 8, lc=:indianred, label=L"f(x) = x^3 - 12x^2 + 36x + 8")
+	xlims!(-1, 8)	
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)		
+	scatter!([(2, 40), (6, 8)], label=:none, m = (6, :indianred, stroke(1, :indianred)))	
+end
+
+# ╔═╡ f26ada95-a3f0-4c23-9591-7f2415a433d2
+begin	
+	plot(range(-2, 6, 50), x->-2x^2 + 8x + 7, lc=:indianred, label=L"f(x) = -2x^2 + 8x + 7")
+	xlims!(-2, 6)	
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)		
+	scatter!([(2, 15)], label=:none, m = (6, :indianred, stroke(1, :indianred)))	
+end
+
+# ╔═╡ 691d5e3a-8621-4587-8324-730637bab813
+begin	
+	plot(range(-5, 5, 100), x->8/(3x^2 + 4), lc=:indianred, label=L"f(x) = \frac{8}{3x^2 + 4}")
+	xlims!(-5, 5)	
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)		
+	scatter!([(0, 2)], label=:none, m = (6, :indianred, stroke(1, :indianred)))	
+end
+
+# ╔═╡ c2b6e4cf-da2b-4945-89e1-34b78bc6f476
+begin	
+	plot(range(-2, 2, 50), x->x^3 - 1, lc=:indianred, label=L"f(x) = x^3 - 1")
+	xlims!(-2, 2)	
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)			
+end
+
+# ╔═╡ f65a4bc7-22d6-48e0-8d82-6fcb62b4dfe8
+md"
+---
+### Segunda derivada, concavidade e convexidade
+"
+
+# ╔═╡ 3e04629a-7046-4b43-b904-1c15bfb0f8a2
+md"
+* O gráfico de uma função poder ser esboçado de maneira relativamente precisa a partir de informações fornecidas pelas suas derivadas.
+* No entanto, alguns aspectos sutis podem ser revelados apenas quando analisamos a derivada segunda.
+* Mas não apenas isso, as noções de concavidade e convexidade são muito mais importantes do que apenas ferramentas auxiliares no esboço de gráficos.
+* Veremos mais adiante que, apesar de a localização de mínimos e máximos locais poder ser revelada por um esboço detalhado do gráfico da função, usualmente é desnecessário termos todo este trabalho.
+* Existe um teste popular para máximos e mínimo que depende do comportamento da função apenas em seus pontos críticos.
+"
+
+# ╔═╡ 22627faf-b905-4ef2-8694-3d6f0131494c
+md"""
+!!! info "Definição (Função estritamente convexa e função estritamente côncava)"
+	Uma função $f$ é **estritamente convexa** em um intervalo se, para qualquer valor de $a$ e $b$ no intervalo, o segmento de reta que une $(a, f(a))$ e $(b, f(b))$ estiver acima do gráfico de $f$.
+
+	Uma função $f$ é **estritamente côncava** em um intervalo se, para qualquer valor de $a$ e $b$ no intervalo, o segmento de reta que une $(a, f(a))$ e $(b, f(b))$ estiver abaixo do gráfico de $f$.
+"""
+
+# ╔═╡ 41e06f30-22e7-4aa4-a8ae-a211f6292613
+md"
+##### Exemplo de função estritamente convexa: $f(x) = x^2 + 1$
+"
+
+# ╔═╡ b5b72791-b186-4a9e-857c-baaeeac71c8f
+begin
+	pontoa = @bind pa Slider(-3:0.5:3, default=-1)
+	pontob = @bind pb Slider(-3:0.5:3, default=2)	
+
+	md"""
+	Ponto a: $(pontoa)
+	
+	Ponto b: $(pontob)	
+	
 	"""
 end
 
-# ╔═╡ ce113cb7-9e78-4276-8661-da5c2709edd1
-begin
-	g(x) = - (x - 3)^2 + 5
-	m = 2
-	plot(range(1, 4, 50), x -> g(x), label=:none, lc=:darkblue)
-	plot!(range(0, 4, 50), x -> m * x, label=:none, lc=:indianred)
-	plot!(range(0, 4, 50), x -> ((g(h) - g(2))/(h-2)) * (x - 2) + g(2), label=:none, lc=:darkgreen)
-	xlims!(0, 5)
-	ylims!(0, 6.5)
-	scatter!((2, 4), label=:none, ms=7, mc=:black)
-	annotate!([(1.85, 4.25, ("P", 16, :top, :black))])
-	vline!([2], ls=:dash, lw=1, lc=:black, label=:none)
-	vline!([h], ls=:dash, lw=1, lc=:black, label=:none)
-	annotate!([(h, -0.3, ("h", 16, :top, :black))])
+# ╔═╡ 6b7dae50-10a4-4f4f-a1d4-895d6efd1899
+begin	
+	plot(range(-3, 3, 50), x->x^2 + 1, lc=:indianred, label="f convexa")
+	plot!(Shape([(pa, pa^2 + 1), (pb, pb^2 + 1)]), label=:none, lc=:deepskyblue4)
+	xlims!(-3, 3)	
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	scatter!([(pa, pa^2 + 1), (pb, pb^2+1)], label=:none, m = (6, :indianred, stroke(1, :indianred)))	
 end
 
-# ╔═╡ 365fe838-5b64-4767-8163-c67f148deaf7
-md"""
-!!! correct "Definição 5.1 - Reta Tangente"
-	A **reta tangente** à curva $y = f(x)$ em um ponto $P(a, f(a))$ é a reta que passa por $P$ com inclinação:
+# ╔═╡ 3a2dc2e7-17c4-44a7-82d3-f090eb76cc93
+md"
+##### Exemplo de função estritamente côncava: $f(x) = -x^2 + 1$
+"
 
-	$$m = \lim_\limits{x \to a} \frac{f(x) - f(a)}{x - a}$$
-
-	desde que esse limite exista.
-"""
-
-# ╔═╡ 541ddf51-c4a7-4f89-aad6-d1b21a3e88c5
-md"""
-> **Exemplo 1**. Encontre a equação da reta tangente à parábola $y = x^2$ no ponto $P(1, 1)$.
-"""
-
-# ╔═╡ 57401e05-3448-4f4c-8236-642f1a8a7788
-md"""
-!!! hint "Resolução"
-	A inclinação da reta tangente será dada por:
-
-	$$\begin{eqnarray}m &=& \lim_\limits{x\to 1} \frac{f(x) - f(1)}{x - 1} = \lim_\limits{x\to 1} \frac{x^2 - 1}{x - 1} \\ &=& \lim_\limits{x\to 1} \frac{(x+1)(x-1)}{x - 1} = \lim_\limits{x\to 1} (x + 1) = 2\end{eqnarray}$$
-
-	Podemos, então, obter a equação da reta tangente ao ponto $(1, 1)$:
-	
-	$$y = 2x - 1$$
-"""
-
-# ╔═╡ a354020d-5464-4f21-8f36-27e40bf3f5f1
+# ╔═╡ d4e4b021-216e-4ee6-a327-bf5bb640273b
 begin
-	plot(x-> x^2, -1, 3, lc=:indianred, label=L"y = x^2")
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)
-	scatter!((1, 1), label=:none, ms=7, mc=:black)
-	plot!(x -> 2*x - 1, lc=:blue, label=L"y = 2x - 1")
-end
+	pontoaa = @bind paa Slider(-3:0.5:3, default=-1)
+	pontobb = @bind pbb Slider(-3:0.5:3, default=2)	
 
-# ╔═╡ 86521785-63d1-4945-8d22-3780743de2df
-md"""
-!!! warning "Inclinação da curva no ponto"
-	Às vezes nos referimos à inclinação da reta tangente como **inclinação da curva** no ponto.
-
-	Note o que acontece com o gráfico da curva à medida que damos _zoom_ em direção ao ponto.
-"""
-
-# ╔═╡ ba62d8c4-2da8-481f-95b2-a92fe761545e
-begin
-	zoom = @bind zoom_reta Slider(range(3, 0.2, 100), default = 3)
 	md"""
-	Zoom: 
+	Ponto a: $(pontoaa)
 	
-	zoom = $(zoom)
+	Ponto b: $(pontobb)	
+	
 	"""
 end
 
-# ╔═╡ 6a3c822e-046d-4a03-9cfe-0962e7faccd0
-begin
-	plot(x-> x^2, -2, 4, lc=:indianred, label=L"y = x^2")
-	xlims!((1 - zoom_reta)*1, (1 + zoom_reta)*1)
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)
-	scatter!((1, 1), ms = 6, mc=:black, label=:none)
+# ╔═╡ 87ed080b-fbf2-4267-9b0c-ae782954b397
+begin	
+	plot(range(-3, 3, 50), x->-x^2 + 1, lc=:indianred, label="f côncava")
+	plot!(Shape([(paa, -paa^2 + 1), (pbb, -pbb^2 + 1)]), label=:none, lc=:deepskyblue4)
+	xlims!(-3, 3)	
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	scatter!([(paa, -paa^2 + 1), (pbb, -pbb^2+1)], label=:none, m = (6, :indianred, stroke(1, :indianred)))	
 end
 
-# ╔═╡ e02c5938-0274-47db-9bc9-2817f01e7e73
+# ╔═╡ 0dbd1af9-4b46-4a35-86f8-87c55c4b1801
 md"
-* Podemos obter a inclinação da reta tangente de uma maneira alternativa que, às vezes, pode ser mais útil
-* Defina $h = x - a$, portanto:
-
-$$m_{PQ} = \frac{f(a + h) - f(a)}{h}$$
+##### E se $f(x) = x^3$?
 "
 
-# ╔═╡ 0925e6bb-bdb4-41b5-9a37-a4a652c2d31c
-md"""
-!!! correct "Definição 5.2 - Reta Tangente"
-	De maneira alternativa, a **reta tangente** à curva $y = f(x)$ em um ponto $P(a, f(a))$ é a reta que passa por $P$ com inclinação:
-
-	$$m = \lim_\limits{h \to 0} \frac{f(a + h) - f(a)}{h}$$
-
-	desde que esse limite exista.
-"""
-
-# ╔═╡ 8b555c6d-229e-4c88-bda8-9ebbbd078ce9
-md"""
-> **Exemplo 2**. Encontre uma equação da reta tangente à hipérbole $y = \frac{3}{x}$ no ponto $(3, 1)$
-"""
-
-# ╔═╡ 8ef626f2-a680-4ab4-ac01-399007973d92
-md"""
-!!! hint "Resolução"
-	A inclinação da reta tangente em $(3,1)$ é:
-
-	$$\begin{eqnarray}m &=& \lim_\limits{h \to 0}\frac{f(3+h)-f(3)}{h} = \lim_\limits{h \to 0}\frac{\frac{3}{3+h}-1}{h} \\ &=& \lim_\limits{h \to 0}\frac{\frac{3-(3+h)}{3+h}}{h} = \lim_\limits{h \to 0}\frac{-h}{h(3+h)} = -\frac{1}{3}\end{eqnarray}$$
-
-	Portanto, a equação da reta tangente no ponto $(3, 1)$ é:
-
-	$$y = -\frac{x}{3} + 2$$
-"""
-
-# ╔═╡ 120efbec-c9c3-4874-9731-3b5ea19219ab
+# ╔═╡ 5fb9a5bf-07f2-4e8f-8a72-533b5e114758
 begin
-	plot(x-> 3/x, 0.5, 5, lc=:indianred, label=L"y = \frac{3}{x}")
-	plot!(x-> 3/x, -3, -0.5, lc=:indianred, label=:none)
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)
-	scatter!((3, 1), label=:none, ms=7, mc=:black)
-	plot!(x -> -x/3 + 2, lc=:blue, label=L"y = -\frac{x}{3} + 2")
-end
+	pontoa3 = @bind pa3 Slider(-3:0.5:3, default=-1)
+	pontob3 = @bind pb3 Slider(-3:0.5:3, default=2)	
 
-# ╔═╡ 8415623e-b1ef-47d3-81cc-58d960bd6844
-md"
-## Derivadas
-"
-
-# ╔═╡ b5a2cf1c-e1dd-480d-9e16-87aa3cfdd586
-md"
-* Os limites do tipo:
-
-$$\lim_{h \to 0}\frac{f(a + h) - f(a)}{h}$$
-
-surgem sempre que calculamos uma **taxa de variação** em qualquer ramo das ciências ou engenharia
-* Uma vez que esse tipo de limite ocorre frequentemente, ele recebe um nome e notação especiais
-"
-
-# ╔═╡ bef1365d-a9d5-4fa1-91a3-040c650b243f
-md"""
-!!! correct "Definição 5.3 - Derivada de uma função em um número"
-	A **derivada de uma função $f$ em um número $a$**, denotada por $f'(a)$, é dada por:
-
-	$$f'(a) = \lim_{h \to 0}\frac{f(a + h) - f(a)}{h}$$
-
-	se o limite existir.
-
-	De maneira equivalente, se definirmos $x = a + h$, então, a derivada de $f$ em um ponto $a$ pode ser definida como:
-
-	$$f'(a) = \lim_{x \to a}\frac{f(x) - f(a)}{x - a}$$
-
-	se o limite existir
-"""
-
-# ╔═╡ 08e7de0a-889b-43b0-870a-e0a65d0bb227
-md"""
-> **Exemplo 3**. Encontre a derivada da função $f(x) = x^2 - 8x + 9$ nos seguintes pontos:
->
-> (i) No ponto 2.
->
-> (ii) No ponto $a$.
-"""
-
-# ╔═╡ df1810e2-878c-4300-b1a4-1dd5da255859
-md"""
-!!! hint "Resolução"
-	(a) Aplicando a definição 5.3, temos:
+	md"""
+	Ponto a: $(pontoa3)
 	
-	$$\begin{eqnarray}f'(2) &=& \lim_{h\to 0}\frac{f(2 + h) - f(2)}{h} \\ &=& \lim_{h\to 0}\frac{(2+h)^2 - 8(2+h) + 9 -(-3)}{h} \\
-	&=& \lim_{h\to 0}\frac{4 + 4h + h^2 - 16 - 8h + 9 + 3}{h} \\
-	&=& \lim_{h\to 0}\frac{h^2-4h}{h} = \lim_{h\to 0}(h-4) = -4
-	\end{eqnarray}$$
-
-	(b) Aplicando a definição 5.3, temos:
+	Ponto b: $(pontob3)	
 	
-	$$\begin{eqnarray}f'(a) &=& \lim_{h\to 0}\frac{f(a + h) - f(a)}{h} \\ &=& \lim_{h\to 0}\frac{[(a+h)^2 - 8(a+h) + 9] -[a^2-8a+9]}{h} \\
-	&=& \lim_{h\to 0}\frac{a^2 + 2ah + h^2 - 8a - 8h + 9 - a^2 + 8a - 9}{h} \\
-	&=& \lim_{h\to 0}\frac{2ah + h^2 - 8h}{h} = \lim_{h\to 0}(2a + h - 8) = 2a - 8
-	\end{eqnarray}$$
-"""
-
-# ╔═╡ d01f06f7-0f73-490c-8d83-79f8ad1b12ce
-md"""
-!!! info "Reta tangente em termos de derivada"
-	A reta tangente a $y = f(x)$ no ponto $(a, f(a))$ é a reta que passa pelo ponto $(a, f(a))$ cuja inclinação é igual a $f'(a)$
-
-	Portanto, usando a forma ponto-inclinação da equação de uma reta, temos a seguinte equação da reta tangente à curva $y = f(x)$ no ponto $(a, f(a))$:
-
-	$$y - f(a) = f'(a)(x-a)$$
-"""
-
-# ╔═╡ aac13033-4001-42a4-8a7d-efea974b8893
-md"""
-> **Exemplo 4**. Encontre a equação da reta tangente à parábola $y = x^2 - 8x + 9$ no ponto $(3, -6)$.
-"""
-
-# ╔═╡ 7400d3a0-1a1b-4e32-a3f6-78fa5d07c6d8
-md"""
-!!! hint "Resolução"
-	No Exemplo 3(b), calculamos a derivada da função $y = x^2 - 8x + 9$ no ponto $a$ e concluímos que $f'(a) = 2a - 8$. Portanto, a inclinação da reta tangente à curva $y = x^2-8x+9$ no ponto $(3, -6)$ é dada por $f'(3) = -2$.
-
-	Concluímos, então, que a equação da reta tangente é dada por:
-
-	$$y - (-6) = -2(x - 3) \quad \Rightarrow \quad y = -2x$$
-"""
-
-# ╔═╡ f0902a89-f3a5-4efd-8bbe-ea72e5e45d40
-begin
-	plot(x-> x^2 - 8x + 9, 0, 10, lc=:indianred, label=L"y = x^2 - 8x + 9")
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)
-	scatter!((3, -6), label=:none, ms=7, mc=:black)
-	plot!(x -> -2*x, lc=:blue, label=L"y = -2x")
+	"""
 end
 
-# ╔═╡ 5dfb4ca2-22aa-4a85-b450-8a056e5dc766
+# ╔═╡ 476b81b2-3d30-4d6b-ba81-4896daf74564
+begin	
+	plot(range(-3, 3, 50), x->x^3, lc=:indianred, label=L"f(x) = x^3")
+	plot!(Shape([(pa3, pa3^3), (pb3, pb3^3)]), label=:none, lc=:deepskyblue4)
+	xlims!(-3, 3)	
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	scatter!([(pa3, pa3^3), (pb3, pb3^3)], label=:none, m = (6, :indianred, stroke(1, :indianred)))	
+end
+
+# ╔═╡ 72eb95ea-40ef-4b54-b164-bf8542965f91
+md"""
+!!! correct "Teorema"
+	Se $f$ é diferenciável e $f'$ é crescente (decrescente), então, $f$ é estritamente convexa (côncava).
+
+	---
+	▶️ Demonstração
+
+	Ver Spivak - Calculus (1994) - pp. 205 🔳
+"""
+
+# ╔═╡ 086a66be-95ca-4627-afaf-4470669c74c4
 md"
-## Taxas de variação
+---
+### Teste da segunda derivada
 "
 
-# ╔═╡ 63bf35de-a5f3-4e6b-a3ee-3e1ee4d8a81b
+# ╔═╡ 255f7439-a329-48d5-9316-9dd826f98ea0
 md"
-* Suponha que a variável dependente $y$ seja uma função de uma variável independente $x$
-* Portanto, quando $x$ varia de $x_1$ para $x_2$, temos que o **incremento** na variável $x$ - denotada por $\Delta x = x_2 - x_1$ levará a uma variação correspondente em $y$ de:
-
-$$\Delta y = f(x_2) - f(x_1)$$
-* O quociente das diferenças:
-
-$$\frac{\Delta y}{\Delta x} = \frac{f(x_2) - f(x_2)}{x_2 - x_1}$$
-é denominado **taxa média de variaçãod e $y$ em relação a $x$** no intervalo $[x_1, x_2]$ e pode ser interpretado como a inclinação da reta secante $PQ$ na figura abaixo
+* Com a relação estabelecida entre a segunda derivada de uma função $f$ e a curvatura de seu gráfico, podemos estabelecer as seguintes condições para extremos locais
 "
 
-# ╔═╡ 0c259a67-48b8-4cb0-ae79-1a7e0d78fffb
+# ╔═╡ 1670f61c-4d17-4b86-ab9e-400c6933f3b6
 md"""
-$(Resource("https://raw.githubusercontent.com/pvfonseca/mtm_aplicada/main/notes/figures/aula5_fig1.PNG", width=>800))
-Fonte: Stewart, Clegg e Watson (2022)
-"""
+!!! correct "Teorema - Teste da segunda derivada"
+	Suponha que $f''$ seja contínua na vizinhança do ponto $a$.
 
-# ╔═╡ b9be4b60-4fb9-4037-b1f8-8ca4a593b49e
-md"
-* Se calcularmos a taxa média de variação em intervalos cada vez menores, fazendo $x_2$ tender a $x_1$ (i.e., $\Delta x \to 0$), ao calcularmos o limite dessas taxas médias de variação, obtemos a **taxa (instantânea) de variação de $y$ em relação a $x$** em $x = x_1$
-* Esta taxa instantânea pode ser interpretada, fisicamente, como a velocidade e, geometricamente, como a inclinação da reta tangente à curva $y = f(x)$ no ponto $P(x_1, f(x_1))$
-"
-
-# ╔═╡ dac1dbbb-c400-48da-a5b2-2c33b7515d86
-md"""
-!!! warning "Taxa instantânea de variação"
-	A **taxa instantânea de variação** é dada por:
-
-	$$\lim_{\Delta x\to 0} \frac{\Delta y}{\Delta x} = \lim_{x_2 \to x_1}\frac{f(x_2) - f(x_1)}{x_2 - x_1}$$
-
-	Note que este limite é, simplesmente, a derivada $f'(x_1)$
-
-	Portanto, a derivada agora tem uma nova interpretação:
-
-	**A derivada $f'(a)$ é a taxa instantânea de variação de $y = f(x)$ em relação a $x$ quando $x = a$**
-"""
-
-# ╔═╡ 7eea26f5-dddf-4986-9fc4-3141cd91e94b
-md"
-* Se a derivada em um ponto for grande, a curva $y = f(x)$ é mais íngrime e, portanto, os valores de $y$ se alteram de maneira mais rápida
-* Quando a derivada em um ponto é pequena, a curva é relativamente plana e, portanto, os valores de $y$ tendem a se alterar de forma mais lenta
-"
-
-# ╔═╡ 87f2e21f-c091-49e3-b0e5-cf65d43bb494
-md"""
-$(Resource("https://raw.githubusercontent.com/pvfonseca/mtm_aplicada/main/notes/figures/aula5_fig2.PNG", width=>800))
-Fonte: Stewart, Clegg e Watson (2022)
-"""
-
-# ╔═╡ 5f3a955b-8231-4c1a-9935-b22b176c492d
-md"""
-> **Exemplo 5**. Um fabricante produz peças de tecido com tamanho fixo. O custo, em unidades monetárias, de produzir $x$ metros de certo tecido é dado por uma função custo $C = f(x)$.
->
-> (a) Qual o significado da derivada $f'(x)$? Quais suas unidades?
->
-> (b) O que significa dizer que $f'(1000) = 9$?
->
-> (c) O que você supõe que seja maior, $f'(50), f'(500)$ ou $f'(5000)$?
-"""
-
-# ╔═╡ e8ab016c-c16d-4c1f-92ab-b4d41baf3c1b
-md"""
-!!! hint "Resolução"
-	(a) A derivada $f'(x)$ é a taxa de variação instantânea de $C$ em relação a $x$, i.e., taxa de variação dos custos de produção em relação ao número de metros produzidos - **custo marginal**
-
-	$$f'(x) = \lim_{\Delta x\to 0}\frac{\Delta C}{\Delta x}$$
-
-	Portanto, $f'(x)$ é medida em unidades monetárias por metro.
-
-	(b) Depois de uma produção de 1.000 metros, a taxa segundo a qual o custo de produção está aumentando é de \$9/metro (quando $x = 1000$, o custo está aumentando 9 vezes mais rápido que $x$)
-
-	Como $\Delta x = 1$ é pequeno quando comparado a $x = 1000$, podemos ter a seguinte aproximação:
-
-	$$f'(1000) \approx \frac{\Delta x}{\Delta x} = \Delta C$$
-
-	e, portanto, o custo de fabricação do milésimo metro (ou do 1001º) é de aproximadamente \$9
-
-	(c) A taxa segundo a qual o custo de produção está crescendo (por metro) provavelmente é menor quando $x = 500$ do que quando $x = 50$ (economias de escala).
-
-	No entanto, à medida que a produção se expande, a operação em larga escala pode tornar-se ineficiente e, portanto, é possível que a taxa de crescimento dos custos pode ser maior quando a produção for muito maior: $f'(5000) > f'(500)$
-"""
-
-# ╔═╡ 295c31de-c476-4a0f-aa25-63be4290c513
-md"""
-> **Exemplo 6**. Seja $D(t)$ a dívida pública dos EUA em $t$. A seguinte tabela dá os valores aproximados dessa função, com estimativas da dívida ao final do ano em bilhões de dólares (de 2000 a 2016).
->
-> | $t$ | $D(t)$ |
-> | --- | --- |
-> | 2000 | 5.662,2 |
-> | 2004 | 7.596,1 |
-> | 2008 | 10.699,8 |
-> | 2012 | 16.432,7 |
-> | 2016 | 19.976,8 |
-> Fonte: US Department of the Treasury
->
-> Interprete e estime os valores de $D'(2008)$
-"""
-
-# ╔═╡ 32c27614-f86b-43c1-a3cf-216502f7bec0
-md"""
-!!! hint "Resolução"
-	A derivada $D'(2008)$ nos diz a taxa de crescimento da dívida pública norte-americana em 2008
-
-	Pela definição, temos que:
-
-	$$D'(2008) = \lim_{t\to 2008}\frac{D(t) - D(2008)}{t - 2008}$$
-
-	Podemos estimar esta derivada calculando os quocientes de diferenças:
-
-	| $t$ | Intervalo de tempo | Taxa de variação média |
-	| --- | --- | --- |
-	| 2000 | [2000, 2008] | 629,7 |
-	| 2004 | [2004, 2008] | 775,93 |
-	| 2012 | [2008, 2012] | 1433,23 |
-	| 2016 | [2008, 2016] | 1159,63 |
-
-	Portanto, $D'(2008) \in (775,93; 1433,23)$ medido em bilhões de dólares por ano.
-
-	Supondo que a dívida pública norte-americana não oscilou consideravelmente entre 2004 e 2012, podemos estimar a taxa de crescimento em 2008 como a média entre os extremos do intervalo:
-
-	$$D'(2008) \approx 1.105$$
-
-	Portanto, a taxa de crescimento da dívida pública norte-americana era de aproximadamente 1.105 bilhões de dólares por ano em 2008
-
-	💡 Uma forma alternativa seria traçar a função da dívida com relação ao tempo e estimar a inclinação da reta tangente em $t = 2008$
-"""
-
-# ╔═╡ fb081184-d184-4dae-9da8-9d20432665a6
-md"
-## Funções diferenciáveis
-"
-
-# ╔═╡ 56379eb0-6e59-4316-a088-51e143302f51
-md"
-* Anteriormente vimos a definição da derivada de uma função $f$ avaliada em um ponto $a$
-* Nosso objetivo agora é permitir que este número $a$ varie
-* Neste caso, temos uma nova função - chamada **derivada de $f$** - definida por:
-
-$$f'(x) = \lim_{h\to 0}\frac{f(x + h) - f(x)}{h}$$
-
-para qualquer número $x$ para o qual esse limite exista
-"
-
-# ╔═╡ 041aacd0-65ca-4925-a99e-d64ad12b67d5
-md"""
-!!! warning "Domínio da função derivada"
-	O domínio de $f'$ é o conjunto $\{x| f'(x) \text{ existe}\}$ e pode ser menor que o domínio de $f$
-"""
-
-# ╔═╡ 49eea7dd-89c7-4868-ae6b-70d7c31efadd
-md"""
-Esboço do gráfico da derivada a partir da inclinação das retas tangentes à curva da função original
-$(Resource("https://raw.githubusercontent.com/pvfonseca/mtm_aplicada/main/notes/figures/aula5_fig3.PNG", width=>800))
-Fonte: Stewart, Clegg e Watson (2022)
-"""
-
-# ╔═╡ 27fff356-420a-4769-b846-d79eee9b5c7b
-md"""
-> **Exercício.** Se $f(x) = x^3 - x$, encontre a função derivada $f'(x)$ e compare os gráficos de $f$ e $f'$
-"""
-
-# ╔═╡ 4e5d90a6-f2b4-402a-8df1-e91a10440c0a
-md"""
-!!! hint "Resolução"
-	Utilizando a definição, temos:
-
-	$$\begin{eqnarray}f'(x) &=& \lim_{h\to 0}\frac{f(x + h) - f(x)}{h} \\ &=& \lim_{h\to 0}\frac{[(x + h)^3 - (x + h)] - [x^3 - x]}{h} \\ &=& \lim_{h\to 0} \frac{[x^3 + 3x^2h + 3xh^2 + h^3 - x - h - x^3 + x]}{h} \\ &=& \lim_{h\to 0}\frac{3x^2h + 3xh^2 + h^3 - h}{h} \\ &=& \lim_{h\to 0}(3x^2 + 3xh + h^2 - 1) = 3x^2 - 1\end{eqnarray}$$
-"""
-
-# ╔═╡ 3214cb20-acc0-4c4c-bc85-288a6350c568
-begin
-	plot(x-> x^3 - x, -10, 10, lc=:indianred, label=L"f(x) = x^3 - x")
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)	
-end
-
-# ╔═╡ a4f4dc3b-788b-4d04-a81b-3c2a4ed32b02
-begin
-	plot(x-> 3x^2 - 1, -10, 10, lc=:indianred, label=L"f'(x) = 3x^2 - 1")
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)	
-end
-
-# ╔═╡ f08cb7c4-582b-47ce-bebe-b51faafa0b88
-md"""
-> **Exercício.** Se $f(x) = \sqrt{x}$, encontre a função derivada $f'(x)$, compare os gráficos de $f$ e $f'$ e determine o domínio das funções
-"""
-
-# ╔═╡ 42461d4b-8314-4860-bb7d-23c41e61568a
-md"""
-!!! hint "Resolução"
-	Utilizando a definição, temos:
-
-	$$\begin{eqnarray}f'(x) &=& \lim_{h\to 0}\frac{f(x + h) - f(x)}{h} \\ &=& \lim_{h\to 0}\frac{\sqrt{x + h} - \sqrt{x}}{h} \\ &=& \lim_{h\to 0}\left(\frac{\sqrt{x + h} - \sqrt{x}}{h} \cdot\frac{\sqrt{x + h} + \sqrt{x}}{\sqrt{x + h} + \sqrt{x}} \right) \\ &=& \lim_{h\to 0}\frac{h}{h(\sqrt{x + h} + \sqrt{x})} \\ &=& \lim_{h\to 0}\frac{1}{\sqrt{x + h} + \sqrt{x}} = \frac{1}{2\sqrt{x}}\end{eqnarray}$$
-
-	Domínio das funções:
-
-	$$\begin{eqnarray} Dom(f) &=& [0, \infty) \\ Dom(f') &=& (0, \infty)\end{eqnarray}$$
-"""
-
-# ╔═╡ 0d37e5ce-0c54-4bb6-aee3-132a4f6e0bb8
-begin
-	plot(x-> √x, 0, 10, lc=:indianred, label=L"f(x) = \sqrt{x}")
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)	
-end
-
-# ╔═╡ 72cb789a-6ba2-476c-8980-075f93e4ca51
-begin
-	plot(x-> 1/(2√x), 0.2, 10, lc=:indianred, label=L"f'(x) = \frac{1}{2\sqrt{x}}")
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)	
-end
-
-# ╔═╡ 0a89831a-6f00-4bd2-acd6-4bd6093b782b
-md"""
-!!! info "Notações"
-	Seja $y = f(x)$, temos as seguintes notações alternativas para a função derivada:
-
-	$$f'(x) = y' = \frac{dy}{dx} = \frac{df}{dx} = \frac{d}{dx}f(x) = Df(x) = D_xf(x)$$
-
-	Os símbolos $D$ e $d/dx$ são chamados **operadores diferenciais** (indicam a operação de diferenciação)
-
-	A notação de Leibniz para a derivada de uma função avaliada em um ponto $a$ pode ser denotada por:
-
-	$$\left.\frac{dy}{dx}\right|_{x = a} \qquad \text{ ou } \qquad \left.\frac{dy}{dx}\right]_{x = a}$$,
-
-	que são equivalentes à notação que vimos anteriormente $f'(a)$
-"""
-
-# ╔═╡ 8a834c18-73ed-4459-a940-965e9902d376
-md"""
-!!! correct "Definição 5.4 - Função diferenciável"
-	Uma função $f$ é derivável ou **diferenciável em $a$** se $f'(a)$ existir.
-
-	A função $f$ é derivável ou **diferenciável em um intervalo aberto $(a,b)$** se for diferenciável em todos os números do intervalo
-
-	O intervalo aberto determinado acima pode ser: $(a, \infty), (-\infty, a) \text{ ou } (-\infty, \infty)$
-"""
-
-# ╔═╡ 5cc706b3-4fdb-4c1b-aac5-63a58f8bd777
-begin
-	plot(x-> abs(x), -5, 5, lc=:indianred, label=L"f(x) = |x|")
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)	
-end
-
-# ╔═╡ 04043bc4-f3a1-469f-97eb-971745f1fb9b
-begin
-	plot(x-> -1, -5, 0, lc=:indianred, label=L"f'(x)")
-	plot!(x-> 1, 0, 5, lc=:indianred, label=:none)
-	vline!([0], lw=1, lc=:black, label=:none)
-	hline!([0], lw=1, lc=:black, label=:none)
-	scatter!([(0, -1), (0,1)], label=:none, ms=7, mc=:white, msc=:indianred, msw = 1)
-end
-
-# ╔═╡ 60e5f05b-f983-47a3-a3eb-80a553abd895
-md"""
-!!! info "Teorema 5.1"
-	Se $f$ for uma função diferenciável em $a$, então, $f$ é uma função contínua em $a$
-"""
-
-# ╔═╡ c2047dc8-1b81-4c46-8c00-87818b48b522
-md"""
-!!! danger ""
-	⚠️ A recíproca do Teorema 5.1 não é verdadeira!
+	* Se $f'(a) = 0$ e $f''(a) > 0$, então, $f$ tem um mínimo local em $a$.
+	* Se $f'(a) = 0$ e $f''(a) < 0$, então, $f$ tem um máximo local em $a$.
 	
-	Existem funções que são contínuas, mas não são diferenciáveis. Por exemplo, $f(x) = |x|$ é contínua em $x = 0$, mas não é diferenciável
+	---
+	▶️ Demonstração
+
+	Ver Spivak - Calculus (1994) - pp. 186-187 🔳
 """
 
-# ╔═╡ 398c1179-d86f-44b5-b6ed-05603ef58284
-md"""
-!!! warning "Funções não diferenciáveis"
-	Nas seguintes situações, a função $f$ não será diferenciável no ponto $a$:
-
-	1. Existência de uma "quinta" em $a$
-	2. Descontinuidade da função em $a$
-	3. Existência de uma reta tangente vertical em $x = a$
-
-	No terceiro caso, a função é contínua em $a$ e, além disso, temos:
-
-	$$\lim_{x\to a} |f'(x)| = \infty$$
-"""
-
-# ╔═╡ 23d3cf6e-588c-434f-8322-3566218f7e54
-md"""
-$(Resource("https://raw.githubusercontent.com/pvfonseca/mtm_aplicada/main/notes/figures/aula5_fig4.PNG", width=>800))
-Fonte: Stewart, Clegg e Watson (2022)
-"""
-
-# ╔═╡ 9bc2cba4-ab28-4daa-b60b-5f34dd46e3a0
+# ╔═╡ 47b6da59-1866-435b-9748-7d8347941abe
 md"
-## Derivadas de ordem superior
+* O Teorema acima pode ser aplicado à função $f(x) = x^3-x$
+* Note que:
+
+$$f'(x) = 3x^2 - 1$$
+
+$$f''(x) = 6x$$
+
+* Nos pontos críticos, $-\sqrt{1/3}$ e $\sqrt{1/3}$, temos:
+
+$$f''\left(-\sqrt{1/3}\right) = -6\sqrt{1/3} < 0$$
+
+$$f''\left(\sqrt{1/3}\right) = 6\sqrt{1/3} > 0$$
+
+* Consequentemente, $-\sqrt{1/3}$ é um ponto de máximo local e $\sqrt{1/3}$ é um ponto de mínimo local
 "
 
-# ╔═╡ 17e62022-8382-4e36-8eb5-3cd68658365a
-md"
-* Se $f$ for uma função diferenciável, então, sua derivada $f'$ também é uma função
-* A função derivada $f'$, portanto, também pode possuir sua própria derivada
-* A derivada de uma derivada é denominada **segunda derivada de $f$** ou derivada de segunda ordem
-* Utilizamos as seguintes notações para a derivada de segunda ordem da função $y = f(x)$:
+# ╔═╡ ae4b16ef-fcfa-4310-9422-bd88214b4313
+begin
+	plot(range(-1.5, 1.5, 50), x->x^3 - x, lc=:indianred, label=L"f(x) = x^3 - x")
+	hline!([0], lc=:black, lw=1, label=:none, ls=:solid)
+	vline!([0], lc=:black, lw=1, label=:none, ls=:solid)		
+	scatter!([(-√(1/3), (-√(1/3)^3) + √(1/3)), (√(1/3), (√(1/3)^3) - √(1/3))], label=:none, m = (6, :indianred, stroke(1, :indianred)))	
+end
 
-$$f''(x) \qquad \text{ ou } \qquad \frac{d}{dx}\left(\frac{dy}{dx}\right) = \frac{d^2y}{dx^2}$$
-
-* A segunda derivada de uma função pode ser interpretada como a taxa de variação de uma taxa de variação
-* Em termos físicos, a **aceleração** é uma derivada de segunda ordem
-"
-
-# ╔═╡ 70c75ccf-8e27-48dc-82c5-ff7349a666b8
-md"
-* O processo de diferenciação pode continuar
-* Em termos gerais, a $n$-ésima derivada de $f$ pode ser obtida derivando a função $f$ por $n$ vezes
-* Denotamos a $n$-ésima derivada da função $y = f(x)$ das seguintes formas:
-
-$$y^{(n)} = f^{(n)}(x) = \frac{d^n y}{dx^n}$$
-"
-
-# ╔═╡ 2f7bf1d1-7ac7-4dda-a44a-3a9f8fefc60f
+# ╔═╡ 13ddcbd6-04af-44af-a7aa-2404d17a3295
 md"""
-> **Exercício.** Seja $f(x) = x^3-x$, calcule $f''(x), f'''(x)$ e $f^{(4)}(x)$
+!!! warning "Casos em que a segunda derivada é nula"
+	Note que se $a$ é um ponto crítico de $f$, é possível que $f''(a) = 0$. Neste caso, o Teorema que acabamos de ver não fornece informações: é possível que $a$ seja um ponto de máximo local, um ponto de mínimo local, ou nenhum dos casos anteriores.
+
+	Exemplos: $f(x) = -x^4$, $f(x) = x^4$, $f(x) = x^5$
 """
 
-# ╔═╡ 1f4bd90c-2982-4a3c-971a-21bed7fef3a4
+# ╔═╡ 53da1af6-43b1-4a11-92ef-2f902170f3ac
+begin
+	la = @layout [a b; c]
+	plota = plot(range(-2, 2, 200), x -> -x^4, lc=:indianred, label=L"f(x) = -x^4")	
+	vline!([0], ls=:solid, lc=:black, lw=0.5, label=:none)
+	hline!([0], ls=:solid, lc=:black, lw=0.5, label=:none)
+	plotb = plot(range(-2, 2, 100), x -> x^4, lc=:indianred, label=L"f(x) = x^4")	
+	vline!([0], ls=:solid, lc=:black, lw=0.5, label=:none)
+	hline!([0], ls=:solid, lc=:black, lw=0.5, label=:none)
+	plotc = plot(range(-2, 2, 100), x -> x^5, lc=:indianred, label=L"f(x) = x^5")
+	vline!([0], ls=:solid, lc=:black, lw=0.5, label=:none)
+	hline!([0], ls=:solid, lc=:black, lw=0.5, label=:none)	
+	plot(plota, plotb, plotc, layout = la)
+end
+
+# ╔═╡ cfc99b71-1abb-4104-9e92-c3ffce3da9b4
 md"""
-!!! hint "Resolução"
-	Vimos, anteriormente, que $f'(x) = 3x^2 - 1$. Portanto:
+!!! correct "Teorema"
+	Suponha que $f''(a)$ exista.
 
-	$$\begin{eqnarray}f''(x) = (f')'(x) &=& \lim_{h\to 0}\frac{f'(x + h) - f'(x)}{h} \\ &=& \lim_{h\to 0}\frac{[3(x + h)^2 - 1] - [3x^2 - 1]}{h} \\ &=& \lim_{h\to 0}\frac{3x^2 + 6xh + 3h^2 - 1 - 3x^2 + 1}{h} \\ &=& \lim_{h\to 0}\frac{6xh+3h^2}{h} = \lim_{h\to 0}(6x + 3h) = 6x
-	\end{eqnarray}$$
+	* Se $f$ tem um mínimo local em $a$, então, $f'(a) = 0$ e $f''(a) \geq 0$.
+	* Se $f$ tem um máximo local em $a$, então, $f'(a) = 0$ e $f''(a) \leq 0$.
+	
+	---
+	▶️ Demonstração
 
-	Como $f''(x) = 6x$, podemos calcular a derivada de terceira ordem:
-
-	$$\begin{eqnarray}f'''(x) = (f'')'(x) &=& \lim_{h\to 0}\frac{f''(x + h) - f''(x)}{h} \\ &=& \lim_{h\to 0}\frac{6(x + h) - 6x}{h} \\ &=& \lim_{h\to 0}\frac{6h}{h} = 6
-	\end{eqnarray}$$
-
-	Por fim, dado que $f^{(3)}(x) = 6$, temos:
-
-	$$\begin{eqnarray}f^{(4)}(x) = (f''')'(x) &=& \lim_{h\to 0}\frac{f'''(x + h) - f'''(x)}{h} \\ &=& \lim_{h\to 0}\frac{6 - 6}{h} = 0
-	\end{eqnarray}$$
+	Ver Spivak - Calculus (1994) - pp. 187 🔳
 """
 
-# ╔═╡ 28ce946c-bdf4-449d-837b-397dea53b010
+# ╔═╡ 5900f92d-0062-411b-9433-805df0816e54
+md"""
+!!! danger "Resumo"
+	Portanto, podemos resumir os resultados obtidos até agora na seguinte tabela:
+
+	Condições para um extremo relativo: $y = f(x)$
+
+	| Condição | Máximo | Mínimo |
+	| :--- | ---: | ---: |
+	| Necessária de primeira ordem | $f'(x) = 0$ | $f'(x) = 0 |
+	| Necessária de segunda ordem | $f''(x) \leq 0$ | $f''(x) \geq 0$|
+	| Suficiente de segunda ordem | $f''(x) < 0$ | $f''(x) > 0$|
+"""
+
+# ╔═╡ 01f866b3-a80f-42a7-bcf9-5555aac71f3c
+md"""
+> **Exercícios**.
+>
+> 1. Encontre o extremo relativo da seguinte função e determine se é um ponto de mínimo ou máximo local:
+>
+> $f(x) = 4x^2 - x$
+>
+> 2. Encontre os extremos relativos da seguinte função e classifique-os:
+>
+> $g(x) = x^3 - 3x^2 + 2$
+>
+> 3. CLassifique os pontos críticos da função:
+>
+> $h(x) = x^2 e^x$
+"""
+
+# ╔═╡ aae4dfff-6c8e-413e-acaa-647912690db9
+begin
+	l_exerc = @layout [a b; c]
+	plot_exerc1 = plot(range(-2, 2, 50), x -> 4x^2 - x, lc=:indianred, label=L"f(x) = 4x^2 - x")	
+	vline!([0], ls=:solid, lc=:black, lw=0.5, label=:none)
+	hline!([0], ls=:solid, lc=:black, lw=0.5, label=:none)
+	plot_exerc2 = plot(range(-2, 4, 50), x -> x^3 - 3x^2 + 2, lc=:indianred, label=L"g(x) = x^3 - 3x^2 + 2")	
+	vline!([0], ls=:solid, lc=:black, lw=0.5, label=:none)
+	hline!([0], ls=:solid, lc=:black, lw=0.5, label=:none)
+	plot_exerc3 = plot(range(-5, 1, 100), x -> x^2*exp(x), lc=:indianred, label=L"h(x) = x^2 e^x")
+	vline!([0], ls=:solid, lc=:black, lw=0.5, label=:none)
+	hline!([0], ls=:solid, lc=:black, lw=0.5, label=:none)	
+	plot(plot_exerc1, plot_exerc2, plot_exerc3, layout = l_exerc)
+end
+
+# ╔═╡ 294f087a-44f4-4b1f-8b92-b6986bc4ff52
+md"
+---
+### Maximização de lucros
+"
+
+# ╔═╡ b015b65d-94f9-4a1d-90dd-11fd21d86fd4
+md"
+* O problema de maximização de lucros por parte de uma firma pode ser especificado como um problema de otimização estática irrestrito:
+$$\max_{Q} \pi(Q) \equiv R(Q) - C(Q)$$
+
+* **Condição necessária de primeira ordem**: quantidade ótima produzida ($Q^*$) deve satisfazer à condição de que receita marginal é igual a custo marginal
+$$\frac{d\pi}{dQ} = 0 \Leftrightarrow R'(Q) = C'(Q)$$
+
+* **Condição necessária de segunda ordem**:
+$$\frac{d^2\pi}{dQ^2} \leq 0 \Leftrightarrow R''(Q) \leq C''(Q)$$
+Note que, como vimos anteriormente, no caso em que $R''(Q) = C''(Q)$, não chegamos a uma conclusão definitiva sobre $Q*$ ser um máximo relativo
+
+* **Condição suficiente de segunda ordem**:
+$$\frac{d^2\pi}{dQ^2} < 0 \Leftrightarrow R''(Q) < C''(Q)$$
+Portanto, avaliadas no ponto $Q^*$, a taxa de variação da receita marginal deve ser menor que a taxa de variação do custo marginal
+"
+
+# ╔═╡ 94390cca-b4ca-4bfa-a9a7-65d0f2458770
+md"""
+!!! info "Exemplo (Maximização de lucros)"
+	Considere, respectivamente, as seguintes funções receita total e custo total:
+
+	$$\begin{eqnarray*} R(Q) &=& 1200Q - 2Q^2, \\ C(Q) &=& Q^3 - 61,25Q^2 + 1528,5Q + 2000\end{eqnarray*}$$
+
+	Calcule os pontos críticos da função lucro e a quantidade $Q^*$ que maximiza o lucro desta firma.
+"""
+
+# ╔═╡ be6abdcf-20c4-477d-b269-48231991963e
 md"
 ## 📚 Bibliografia
 
@@ -673,8 +841,8 @@ PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 [compat]
 LaTeXStrings = "~1.3.0"
 Measures = "~0.3.2"
-Plots = "~1.38.10"
-PlutoUI = "~0.7.50"
+Plots = "~1.38.12"
+PlutoUI = "~0.7.51"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -683,7 +851,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.9.0"
 manifest_format = "2.0"
-project_hash = "378f739220c3378e596c6ed6d9090ffcfe2c72b8"
+project_hash = "a9a777e8910543ce4ec93950835e3812d07ac457"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -717,22 +885,6 @@ deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jl
 git-tree-sha1 = "4b859a208b2397a7a623a03449e4636bdb17bcf2"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
 version = "1.16.1+1"
-
-[[deps.ChainRulesCore]]
-deps = ["Compat", "LinearAlgebra", "SparseArrays"]
-git-tree-sha1 = "c6d890a52d2c4d55d326439580c3b8d0875a77d9"
-uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-version = "1.15.7"
-
-[[deps.ChangesOfVariables]]
-deps = ["LinearAlgebra", "Test"]
-git-tree-sha1 = "485193efd2176b88e6622a39a246f8c5b600e74e"
-uuid = "9e997f8a-9a97-42d5-a9f1-ce6bfc15e2c0"
-version = "0.1.6"
-weakdeps = ["ChainRulesCore"]
-
-    [deps.ChangesOfVariables.extensions]
-    ChangesOfVariablesChainRulesCoreExt = "ChainRulesCore"
 
 [[deps.CodecZlib]]
 deps = ["TranscodingStreams", "Zlib_jll"]
@@ -779,15 +931,21 @@ deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
 version = "1.0.2+0"
 
+[[deps.ConcurrentUtilities]]
+deps = ["Serialization", "Sockets"]
+git-tree-sha1 = "96d823b94ba8d187a6d8f0826e731195a74b90e9"
+uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
+version = "2.2.0"
+
 [[deps.Contour]]
 git-tree-sha1 = "d05d9e7b7aedff4e5b51a029dced05cfb6125781"
 uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
 version = "0.6.2"
 
 [[deps.DataAPI]]
-git-tree-sha1 = "e8119c1a33d267e16108be441a287a6981ba1630"
+git-tree-sha1 = "8da84edb865b0b5b0100c0666a9bc9a0b71c553c"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
-version = "1.14.0"
+version = "1.15.0"
 
 [[deps.DataStructures]]
 deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
@@ -875,15 +1033,15 @@ version = "3.3.8+0"
 
 [[deps.GR]]
 deps = ["Artifacts", "Base64", "DelimitedFiles", "Downloads", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Pkg", "Preferences", "Printf", "Random", "Serialization", "Sockets", "TOML", "Tar", "Test", "UUIDs", "p7zip_jll"]
-git-tree-sha1 = "db730189e3d250d97515a91886de7e33aa8833e6"
+git-tree-sha1 = "d014972cd6f5afb1f8cd7adf000b7a966d62c304"
 uuid = "28b8d3ca-fb5f-59d9-8090-bfdbd6d07a71"
-version = "0.72.2"
+version = "0.72.5"
 
 [[deps.GR_jll]]
 deps = ["Artifacts", "Bzip2_jll", "Cairo_jll", "FFMPEG_jll", "Fontconfig_jll", "GLFW_jll", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Libtiff_jll", "Pixman_jll", "Qt5Base_jll", "Zlib_jll", "libpng_jll"]
-git-tree-sha1 = "47a2efe07729dd508a032e2f56c46c517481052a"
+git-tree-sha1 = "f670f269909a9114df1380cc0fcaa316fff655fb"
 uuid = "d2c73de3-f751-5644-a686-071e5b155ba9"
-version = "0.72.2+0"
+version = "0.72.5+0"
 
 [[deps.Gettext_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Libiconv_jll", "Pkg", "XML2_jll"]
@@ -909,10 +1067,10 @@ uuid = "42e2da0e-8278-4e71-bc24-59509adca0fe"
 version = "1.0.2"
 
 [[deps.HTTP]]
-deps = ["Base64", "CodecZlib", "Dates", "IniFile", "Logging", "LoggingExtras", "MbedTLS", "NetworkOptions", "OpenSSL", "Random", "SimpleBufferStream", "Sockets", "URIs", "UUIDs"]
-git-tree-sha1 = "37e4657cd56b11abe3d10cd4a1ec5fbdb4180263"
+deps = ["Base64", "CodecZlib", "ConcurrentUtilities", "Dates", "Logging", "LoggingExtras", "MbedTLS", "NetworkOptions", "OpenSSL", "Random", "SimpleBufferStream", "Sockets", "URIs", "UUIDs"]
+git-tree-sha1 = "ba9eca9f8bdb787c6f3cf52cb4a404c0e349a0d1"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-version = "1.7.4"
+version = "1.9.5"
 
 [[deps.HarfBuzz_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "Graphite2_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Pkg"]
@@ -934,24 +1092,13 @@ version = "0.9.4"
 
 [[deps.IOCapture]]
 deps = ["Logging", "Random"]
-git-tree-sha1 = "f7be53659ab06ddc986428d3a9dcc95f6fa6705a"
+git-tree-sha1 = "d75853a0bdbfb1ac815478bacd89cd27b550ace6"
 uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
-version = "0.2.2"
-
-[[deps.IniFile]]
-git-tree-sha1 = "f550e6e32074c939295eb5ea6de31849ac2c9625"
-uuid = "83e8ac13-25f8-5344-8a64-a9f2b223428f"
-version = "0.5.1"
+version = "0.2.3"
 
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
-
-[[deps.InverseFunctions]]
-deps = ["Test"]
-git-tree-sha1 = "49510dfcb407e572524ba94aeae2fced1f3feb0f"
-uuid = "3587e190-3f89-42d0-90ee-14403ec27112"
-version = "0.1.8"
 
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
@@ -1007,20 +1154,16 @@ version = "1.3.0"
 
 [[deps.Latexify]]
 deps = ["Formatting", "InteractiveUtils", "LaTeXStrings", "MacroTools", "Markdown", "OrderedCollections", "Printf", "Requires"]
-git-tree-sha1 = "98dc144f1e0b299d49e8d23e56ad68d3e4f340a5"
+git-tree-sha1 = "099e356f267354f46ba65087981a77da23a279b7"
 uuid = "23fbe1c1-3f47-55db-b15f-69d7ec21a316"
-version = "0.15.20"
+version = "0.16.0"
 
     [deps.Latexify.extensions]
     DataFramesExt = "DataFrames"
-    DiffEqBiologicalExt = "DiffEqBiological"
-    ParameterizedFunctionsExt = "DiffEqBase"
     SymEngineExt = "SymEngine"
 
     [deps.Latexify.weakdeps]
     DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-    DiffEqBase = "2b5f629d-d688-5b77-993f-72d75c75574e"
-    DiffEqBiological = "eb300fae-53e8-50a0-950c-e21f52c2b7e0"
     SymEngine = "123dc426-2d89-5057-bbad-38513e3affd8"
 
 [[deps.LibCURL]]
@@ -1102,12 +1245,16 @@ deps = ["DocStringExtensions", "IrrationalConstants", "LinearAlgebra"]
 git-tree-sha1 = "0a1b7c2863e44523180fdb3146534e265a91870b"
 uuid = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
 version = "0.3.23"
-weakdeps = ["ChainRulesCore", "ChangesOfVariables", "InverseFunctions"]
 
     [deps.LogExpFunctions.extensions]
     LogExpFunctionsChainRulesCoreExt = "ChainRulesCore"
     LogExpFunctionsChangesOfVariablesExt = "ChangesOfVariables"
     LogExpFunctionsInverseFunctionsExt = "InverseFunctions"
+
+    [deps.LogExpFunctions.weakdeps]
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    ChangesOfVariables = "9e997f8a-9a97-42d5-a9f1-ce6bfc15e2c0"
+    InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
 
 [[deps.Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
@@ -1190,9 +1337,9 @@ version = "0.8.1+0"
 
 [[deps.OpenSSL]]
 deps = ["BitFlags", "Dates", "MozillaCACerts_jll", "OpenSSL_jll", "Sockets"]
-git-tree-sha1 = "5b3e170ea0724f1e3ed6018c5b006c190f80e87d"
+git-tree-sha1 = "51901a49222b09e3743c65b8847687ae5fc78eb2"
 uuid = "4d8831e6-92b7-49fb-bdf8-b643e874388c"
-version = "1.3.5"
+version = "1.4.1"
 
 [[deps.OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1223,10 +1370,10 @@ uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
 version = "10.42.0+0"
 
 [[deps.Parsers]]
-deps = ["Dates", "SnoopPrecompile"]
-git-tree-sha1 = "478ac6c952fddd4399e71d4779797c538d0ff2bf"
+deps = ["Dates", "PrecompileTools", "UUIDs"]
+git-tree-sha1 = "a5aef8d4a6e8d81f171b2bd4be5265b01384c74c"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "2.5.8"
+version = "2.5.10"
 
 [[deps.Pipe]]
 git-tree-sha1 = "6842804e7867b115ca9de748a0cf6b364523c16d"
@@ -1257,10 +1404,10 @@ uuid = "995b91a9-d308-5afd-9ec6-746e21dbc043"
 version = "1.3.5"
 
 [[deps.Plots]]
-deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "JLFzf", "JSON", "LaTeXStrings", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "Pkg", "PlotThemes", "PlotUtils", "Preferences", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "RelocatableFolders", "Requires", "Scratch", "Showoff", "SnoopPrecompile", "SparseArrays", "Statistics", "StatsBase", "UUIDs", "UnicodeFun", "Unzip"]
-git-tree-sha1 = "5434b0ee344eaf2854de251f326df8720f6a7b55"
+deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "JLFzf", "JSON", "LaTeXStrings", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "Pkg", "PlotThemes", "PlotUtils", "PrecompileTools", "Preferences", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "RelocatableFolders", "Requires", "Scratch", "Showoff", "SparseArrays", "Statistics", "StatsBase", "UUIDs", "UnicodeFun", "Unzip"]
+git-tree-sha1 = "d03ef538114b38f89d66776f2d8fdc0280f90621"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
-version = "1.38.10"
+version = "1.38.12"
 
     [deps.Plots.extensions]
     FileIOExt = "FileIO"
@@ -1278,21 +1425,21 @@ version = "1.38.10"
 
 [[deps.PlutoUI]]
 deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
-git-tree-sha1 = "5bb5129fdd62a2bbbe17c2756932259acf467386"
+git-tree-sha1 = "b478a748be27bd2f2c73a7690da219d0844db305"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-version = "0.7.50"
+version = "0.7.51"
 
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
-git-tree-sha1 = "bc2bda41d798c2e66e7c44a11007bb329b15941b"
+git-tree-sha1 = "259e206946c293698122f63e2b513a7c99a244e8"
 uuid = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
-version = "1.0.1"
+version = "1.1.1"
 
 [[deps.Preferences]]
 deps = ["TOML"]
-git-tree-sha1 = "47e5f437cc0e7ef2ce8406ce1e7e24d44915f88d"
+git-tree-sha1 = "7eb1686b4f04b82f96ed7a4ea5890a4f0c7a09f1"
 uuid = "21216c6a-2e73-6563-6e65-726566657250"
-version = "1.3.0"
+version = "1.4.0"
 
 [[deps.Printf]]
 deps = ["Unicode"]
@@ -1313,16 +1460,16 @@ deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[deps.RecipesBase]]
-deps = ["SnoopPrecompile"]
-git-tree-sha1 = "261dddd3b862bd2c940cf6ca4d1c8fe593e457c8"
+deps = ["PrecompileTools"]
+git-tree-sha1 = "5c3d09cc4f31f5fc6af001c250bf1278733100ff"
 uuid = "3cdcf5f2-1ef4-517c-9805-6587b60abb01"
-version = "1.3.3"
+version = "1.3.4"
 
 [[deps.RecipesPipeline]]
-deps = ["Dates", "NaNMath", "PlotUtils", "RecipesBase", "SnoopPrecompile"]
-git-tree-sha1 = "e974477be88cb5e3040009f3767611bc6357846f"
+deps = ["Dates", "NaNMath", "PlotUtils", "PrecompileTools", "RecipesBase"]
+git-tree-sha1 = "45cf9fd0ca5839d06ef333c8201714e888486342"
 uuid = "01d81517-befc-4cb6-b9ec-a95719d0359c"
-version = "0.6.11"
+version = "0.6.12"
 
 [[deps.Reexport]]
 git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
@@ -1365,12 +1512,6 @@ git-tree-sha1 = "874e8867b33a00e784c8a7e4b60afe9e037b74e1"
 uuid = "777ac1f9-54b0-4bf8-805c-2214025038e7"
 version = "1.1.0"
 
-[[deps.SnoopPrecompile]]
-deps = ["Preferences"]
-git-tree-sha1 = "e760a70afdcd461cf01a575947738d359234665c"
-uuid = "66db9d55-30c0-4569-8b51-7e840670fc0c"
-version = "1.0.3"
-
 [[deps.Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
 
@@ -1389,10 +1530,12 @@ deps = ["IrrationalConstants", "LogExpFunctions", "OpenLibm_jll", "OpenSpecFun_j
 git-tree-sha1 = "ef28127915f4229c971eb43f3fc075dd3fe91880"
 uuid = "276daf66-3868-5448-9aa4-cd146d93841b"
 version = "2.2.0"
-weakdeps = ["ChainRulesCore"]
 
     [deps.SpecialFunctions.extensions]
     SpecialFunctionsChainRulesCoreExt = "ChainRulesCore"
+
+    [deps.SpecialFunctions.weakdeps]
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -1438,9 +1581,9 @@ uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [[deps.TranscodingStreams]]
 deps = ["Random", "Test"]
-git-tree-sha1 = "0b829474fed270a4b0ab07117dce9b9a2fa7581a"
+git-tree-sha1 = "9a6ae7ed916312b41236fcef7e0af564ef934769"
 uuid = "3bb67fe8-82b1-5028-8e26-92a6c54297fa"
-version = "0.9.12"
+version = "0.9.13"
 
 [[deps.Tricks]]
 git-tree-sha1 = "aadb748be58b492045b4f56166b5188aa63ce549"
@@ -1702,75 +1845,96 @@ version = "1.4.1+0"
 """
 
 # ╔═╡ Cell order:
-# ╟─9341d680-e167-11ed-1b6f-2b0f0911012e
-# ╟─881fbecd-dd85-40f8-8758-eb058f8010db
-# ╟─95cf31a2-4ce5-4e41-80ca-fa2b5f2d2b00
-# ╟─0e079409-7677-4d24-8e87-88b6b69fce49
-# ╟─ebf7ef94-34b2-4386-b802-769d9992362b
-# ╟─6a8c1d2c-8d8f-4ce1-921c-f97c66a3ddf9
-# ╟─18d64874-c6b1-4b17-9ead-2fc6978c8cea
-# ╟─9c759fdf-a018-44f8-8aac-3247eb549c2d
-# ╟─ddd2aff4-1a08-47f7-9258-fe8a06aeb95c
-# ╟─d8305f01-f116-4170-9edb-3068631d3074
-# ╟─3cf205a4-0e27-4b77-90df-e29f92ce12e4
-# ╟─ce113cb7-9e78-4276-8661-da5c2709edd1
-# ╟─365fe838-5b64-4767-8163-c67f148deaf7
-# ╟─541ddf51-c4a7-4f89-aad6-d1b21a3e88c5
-# ╟─57401e05-3448-4f4c-8236-642f1a8a7788
-# ╟─a354020d-5464-4f21-8f36-27e40bf3f5f1
-# ╟─86521785-63d1-4945-8d22-3780743de2df
-# ╟─ba62d8c4-2da8-481f-95b2-a92fe761545e
-# ╟─6a3c822e-046d-4a03-9cfe-0962e7faccd0
-# ╟─e02c5938-0274-47db-9bc9-2817f01e7e73
-# ╟─0925e6bb-bdb4-41b5-9a37-a4a652c2d31c
-# ╟─8b555c6d-229e-4c88-bda8-9ebbbd078ce9
-# ╟─8ef626f2-a680-4ab4-ac01-399007973d92
-# ╟─120efbec-c9c3-4874-9731-3b5ea19219ab
-# ╟─8415623e-b1ef-47d3-81cc-58d960bd6844
-# ╟─b5a2cf1c-e1dd-480d-9e16-87aa3cfdd586
-# ╟─bef1365d-a9d5-4fa1-91a3-040c650b243f
-# ╟─08e7de0a-889b-43b0-870a-e0a65d0bb227
-# ╟─df1810e2-878c-4300-b1a4-1dd5da255859
-# ╟─d01f06f7-0f73-490c-8d83-79f8ad1b12ce
-# ╟─aac13033-4001-42a4-8a7d-efea974b8893
-# ╟─7400d3a0-1a1b-4e32-a3f6-78fa5d07c6d8
-# ╟─f0902a89-f3a5-4efd-8bbe-ea72e5e45d40
-# ╟─5dfb4ca2-22aa-4a85-b450-8a056e5dc766
-# ╟─63bf35de-a5f3-4e6b-a3ee-3e1ee4d8a81b
-# ╟─0c259a67-48b8-4cb0-ae79-1a7e0d78fffb
-# ╟─b9be4b60-4fb9-4037-b1f8-8ca4a593b49e
-# ╟─dac1dbbb-c400-48da-a5b2-2c33b7515d86
-# ╟─7eea26f5-dddf-4986-9fc4-3141cd91e94b
-# ╟─87f2e21f-c091-49e3-b0e5-cf65d43bb494
-# ╟─5f3a955b-8231-4c1a-9935-b22b176c492d
-# ╟─e8ab016c-c16d-4c1f-92ab-b4d41baf3c1b
-# ╟─295c31de-c476-4a0f-aa25-63be4290c513
-# ╟─32c27614-f86b-43c1-a3cf-216502f7bec0
-# ╟─fb081184-d184-4dae-9da8-9d20432665a6
-# ╟─56379eb0-6e59-4316-a088-51e143302f51
-# ╟─041aacd0-65ca-4925-a99e-d64ad12b67d5
-# ╟─49eea7dd-89c7-4868-ae6b-70d7c31efadd
-# ╟─27fff356-420a-4769-b846-d79eee9b5c7b
-# ╟─4e5d90a6-f2b4-402a-8df1-e91a10440c0a
-# ╟─3214cb20-acc0-4c4c-bc85-288a6350c568
-# ╟─a4f4dc3b-788b-4d04-a81b-3c2a4ed32b02
-# ╟─f08cb7c4-582b-47ce-bebe-b51faafa0b88
-# ╟─42461d4b-8314-4860-bb7d-23c41e61568a
-# ╟─0d37e5ce-0c54-4bb6-aee3-132a4f6e0bb8
-# ╟─72cb789a-6ba2-476c-8980-075f93e4ca51
-# ╟─0a89831a-6f00-4bd2-acd6-4bd6093b782b
-# ╟─8a834c18-73ed-4459-a940-965e9902d376
-# ╟─5cc706b3-4fdb-4c1b-aac5-63a58f8bd777
-# ╟─04043bc4-f3a1-469f-97eb-971745f1fb9b
-# ╟─60e5f05b-f983-47a3-a3eb-80a553abd895
-# ╟─c2047dc8-1b81-4c46-8c00-87818b48b522
-# ╟─398c1179-d86f-44b5-b6ed-05603ef58284
-# ╟─23d3cf6e-588c-434f-8322-3566218f7e54
-# ╟─9bc2cba4-ab28-4daa-b60b-5f34dd46e3a0
-# ╟─17e62022-8382-4e36-8eb5-3cd68658365a
-# ╟─70c75ccf-8e27-48dc-82c5-ff7349a666b8
-# ╟─2f7bf1d1-7ac7-4dda-a44a-3a9f8fefc60f
-# ╟─1f4bd90c-2982-4a3c-971a-21bed7fef3a4
-# ╟─28ce946c-bdf4-449d-837b-397dea53b010
+# ╟─3949d830-fd82-11ed-222b-4906774e18de
+# ╟─628e11b8-8e29-4234-8bad-a56c2cc3e36a
+# ╟─5ffd7e9e-240a-4d65-a880-6d61bfc7d30a
+# ╟─a7739997-4e40-47b7-8eac-eaef3b3ece05
+# ╟─0629c3de-2570-42a5-9ba3-e312cfaf2c60
+# ╟─49944de8-467a-4df3-9d7a-2222b29d044d
+# ╟─981a4689-e607-4da9-ae21-c94fb73d8685
+# ╟─7b496d13-a214-48c5-8954-1a8ae1e7f6d4
+# ╟─ffa8b20f-1f57-4d69-a605-3db9dbc2a1a4
+# ╟─11a96a89-6fbe-4cf7-96be-966a5141f2ae
+# ╟─7e09331f-1eb6-46be-980e-8003ec38711b
+# ╟─fdfb28f3-ed02-4639-be0e-6ac9a95f6278
+# ╟─1509d7c9-7529-4ac1-a250-b96a692c9614
+# ╟─ca01814a-19b6-43dc-aeff-5a49f4c6597d
+# ╟─437a7bf7-e7f2-47f5-bb3c-4d28a18451b9
+# ╟─b3267b35-11d2-46e5-8972-f58281290c8b
+# ╟─72af4ebb-c629-49d1-bfcc-d0d9de07e0fa
+# ╟─075b508e-c88e-41ea-81ef-2bb7d5a4950d
+# ╟─a7615954-e770-4b6f-80c3-da3882878717
+# ╟─53143d4b-c0c0-4a46-8afc-75515582b42c
+# ╟─cba1a083-8bc9-48d0-b79f-8e9159b8fa14
+# ╟─da3eb8c3-992d-470b-aa4f-510e58d51a6e
+# ╟─325c1802-9dbd-4572-92d7-b1bf21ad1d34
+# ╟─1bf2d305-1943-485b-abb1-29c8869cd075
+# ╟─34fd9dfb-7f29-4d60-b3a5-169a39c5a5eb
+# ╟─2a16c10a-5a0e-4147-a6fa-3ac7fa0ccb2d
+# ╟─7b469342-1626-41ce-96d7-5b7744cb38af
+# ╟─cd5ae57b-64d1-48bf-8af7-fc08e9fcc571
+# ╟─44f44f43-76b7-4f75-a133-154f14fcd7f3
+# ╟─a312b8d9-db95-4e59-a785-9372d9e19523
+# ╟─8147c316-b90b-4c73-9a55-c7e8090ca058
+# ╟─22da3e17-40e7-40d0-bc36-45e8e202f922
+# ╟─1a935c85-cdf8-4652-87f2-ed968860557b
+# ╟─627ed056-0a3c-4d04-899b-df20f857d543
+# ╟─19362b71-dc0f-4531-82d8-0c16f02eec5b
+# ╟─28bf267e-e157-4995-8b5a-5ac364352721
+# ╟─481791b2-98dd-444a-8c1e-9d7f9b090a9b
+# ╟─6eb31322-81e6-4eb4-9607-e46a5a79f634
+# ╟─64caaf9e-2512-4293-b0b7-6bc1a473413b
+# ╟─7d053bac-33b3-4804-83eb-25c9b886823b
+# ╟─4100e93b-2817-4614-b055-b6286b765712
+# ╟─b0347db2-5cde-4441-b7ff-730cd3ed7eb4
+# ╟─f51f2119-0106-4cf6-acdc-8b37eeb4371d
+# ╟─404f1960-b273-454f-be5a-511bfbe08b8e
+# ╟─5bbb4bde-73fb-49e9-851c-b302862e08e4
+# ╟─584a2f6e-a257-411e-b975-10f3262b1dc1
+# ╟─fc3765a7-3652-4121-8600-e6981c858b8b
+# ╟─c43dd456-ac36-4915-880c-1df7f7f6b8f8
+# ╟─5e405354-96c3-4f3e-932d-5aecbd90e816
+# ╟─9e3ab534-851a-48c5-ba55-5103d1bef262
+# ╟─d221ee4a-bffa-45ea-9245-a54a92fb7d46
+# ╟─5b33c0ac-ee07-41ae-b24d-f54137491da6
+# ╟─4996743b-f981-4210-a02c-b76471cfcc41
+# ╟─4529c42e-feb4-4ce5-9e6e-41274f892ece
+# ╟─74c68a75-a890-48bc-a35d-649ffadcdce8
+# ╟─0b1ee673-16f2-4b29-a9e1-7c376572187e
+# ╟─626a5700-e192-4e26-8e07-68a2ba3ee3a2
+# ╟─ebb6aba4-57ee-4425-b2b5-4e8c6ead314c
+# ╟─6bec7bf9-c557-4bc7-b6fe-1e5b261b8a30
+# ╟─601c9556-20d1-4e3c-8056-6bcd29a68add
+# ╟─f26ada95-a3f0-4c23-9591-7f2415a433d2
+# ╟─691d5e3a-8621-4587-8324-730637bab813
+# ╟─c2b6e4cf-da2b-4945-89e1-34b78bc6f476
+# ╟─f65a4bc7-22d6-48e0-8d82-6fcb62b4dfe8
+# ╟─3e04629a-7046-4b43-b904-1c15bfb0f8a2
+# ╟─22627faf-b905-4ef2-8694-3d6f0131494c
+# ╟─41e06f30-22e7-4aa4-a8ae-a211f6292613
+# ╟─b5b72791-b186-4a9e-857c-baaeeac71c8f
+# ╟─6b7dae50-10a4-4f4f-a1d4-895d6efd1899
+# ╟─3a2dc2e7-17c4-44a7-82d3-f090eb76cc93
+# ╟─d4e4b021-216e-4ee6-a327-bf5bb640273b
+# ╟─87ed080b-fbf2-4267-9b0c-ae782954b397
+# ╟─0dbd1af9-4b46-4a35-86f8-87c55c4b1801
+# ╟─5fb9a5bf-07f2-4e8f-8a72-533b5e114758
+# ╟─476b81b2-3d30-4d6b-ba81-4896daf74564
+# ╟─72eb95ea-40ef-4b54-b164-bf8542965f91
+# ╟─086a66be-95ca-4627-afaf-4470669c74c4
+# ╟─255f7439-a329-48d5-9316-9dd826f98ea0
+# ╟─1670f61c-4d17-4b86-ab9e-400c6933f3b6
+# ╟─47b6da59-1866-435b-9748-7d8347941abe
+# ╟─ae4b16ef-fcfa-4310-9422-bd88214b4313
+# ╟─13ddcbd6-04af-44af-a7aa-2404d17a3295
+# ╟─53da1af6-43b1-4a11-92ef-2f902170f3ac
+# ╟─cfc99b71-1abb-4104-9e92-c3ffce3da9b4
+# ╟─5900f92d-0062-411b-9433-805df0816e54
+# ╟─01f866b3-a80f-42a7-bcf9-5555aac71f3c
+# ╟─aae4dfff-6c8e-413e-acaa-647912690db9
+# ╟─294f087a-44f4-4b1f-8b92-b6986bc4ff52
+# ╟─b015b65d-94f9-4a1d-90dd-11fd21d86fd4
+# ╟─94390cca-b4ca-4bfa-a9a7-65d0f2458770
+# ╟─be6abdcf-20c4-477d-b269-48231991963e
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
